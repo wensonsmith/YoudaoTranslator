@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bundleid</key>
+	<string>Youdao Translate</string>
+	<key>connections</key>
+	<dict>
+		<key>5EB7D1DA-4576-4D69-9B82-F6B3E4D785EA</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>903468CF-6A26-4DB2-B74D-BA10E1A3F11D</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
+	</dict>
+	<key>createdby</key>
+	<string>Wenson Smith</string>
+	<key>description</key>
+	<string>Translate using Youdao API</string>
+	<key>disabled</key>
+	<false/>
+	<key>name</key>
+	<string>Youdao Translate</string>
+	<key>objects</key>
+	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>0</integer>
+				<key>escaping</key>
+				<integer>0</integer>
+				<key>keyword</key>
+				<string>yd</string>
+				<key>runningsubtext</key>
+				<string>正在翻译</string>
+				<key>script</key>
+				<string>require_once('translate.php');
+
+$translate = new Translate();
+
+$translate-&gt;getTranslation('{query}');
+
+</string>
+				<key>subtext</key>
+				<string>请输入翻译内容</string>
+				<key>title</key>
+				<string>有道翻译</string>
+				<key>type</key>
+				<integer>1</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>5EB7D1DA-4576-4D69-9B82-F6B3E4D785EA</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>autopaste</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.clipboard</string>
+			<key>uid</key>
+			<string>903468CF-6A26-4DB2-B74D-BA10E1A3F11D</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+	</array>
+	<key>readme</key>
+	<string></string>
+	<key>uidata</key>
+	<dict>
+		<key>5EB7D1DA-4576-4D69-9B82-F6B3E4D785EA</key>
+		<dict>
+			<key>ypos</key>
+			<real>20</real>
+		</dict>
+		<key>903468CF-6A26-4DB2-B74D-BA10E1A3F11D</key>
+		<dict>
+			<key>ypos</key>
+			<real>20</real>
+		</dict>
+	</dict>
+	<key>webaddress</key>
+	<string>http://www.seekbetter.me</string>
+</dict>
+</plist>
