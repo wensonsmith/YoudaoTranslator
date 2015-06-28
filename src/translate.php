@@ -19,6 +19,17 @@ class Translate{
 									"translate.png");
 
 			if(isset($res->basic)){
+				$phonetic = "";
+				if (isset($res->basic->{'phonetic'}))
+					$phonetic .= "[".$res->basic->{'phonetic'}."]";
+				if (isset($res->basic->{'us-phonetic'}))
+					$phonetic .= " [美: ".$res->basic->{'us-phonetic'}."]";
+				if (isset($res->basic->{'uk-phonetic'}))
+					$phonetic .= " [英: ".$res->basic->{'uk-phonetic'}."]";
+
+				if (!empty($phonetic))
+					$workflows->result('', $phonetic, $phonetic, $query, "translate.png");
+
 				$explains = $res->basic->explains;
 
 				foreach ($explains as $key => $value) {
