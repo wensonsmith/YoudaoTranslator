@@ -4,7 +4,24 @@ require_once('workflows.php');
 
 class Translate{
 
-	private $url = "http://fanyi.youdao.com/openapi.do?keyfrom=SeekBetterMe&key=164530784&type=data&doctype=json&version=1.1&q=";
+	private $url = "http://fanyi.youdao.com/openapi.do?type=data&doctype=json&version=1.1&";
+
+	function __construct(){
+		$pair = $this->getRandomKey();
+		$this->url .= "keyfrom=".$pair['keyfrom']."&key=".$pair['key']."&q=";
+	}
+
+	private function getRandomKey()
+	{
+		$keys  = array(
+			array('key' => '541488500', 'keyfrom'=>'ScentRemains'),
+			array('key' => '164530784', 'keyfrom'=>'SeekBetterMe'),
+			array('key' => '1813511369', 'keyfrom'=>'Bro2Win'),
+			array('key' => '2046568483', 'keyfrom'=>'SanXiShi')
+		);
+
+		return $keys[array_rand($keys)];
+	}
 
 	public function getTranslation($query){
 		$workflows = new Workflows();
