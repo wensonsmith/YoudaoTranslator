@@ -1,0 +1,22 @@
+{
+    "name": "joetannenbaum/alfred-workflow",
+    "description": "PHP helper for creating Alfred Workflows.",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Joe Tannenbaum",
+            "email": "joe@joe.codes"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Alfred\\Workflows\\": "src/"
+        }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^5.3|~4.8"
+    }
+}

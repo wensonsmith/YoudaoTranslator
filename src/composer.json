@@ -1,0 +1,5 @@
+{
+    "require": {
+        "joetannenbaum/alfred-workflow": "^0.1.0"
+    }
+}

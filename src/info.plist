@@ -3,23 +3,65 @@
 <plist version="1.0">
 <dict>
 	<key>bundleid</key>
-	<string>Youdao Translate</string>
+	<string>Youdao.Translator</string>
+	<key>category</key>
+	<string>Tools</string>
 	<key>connections</key>
 	<dict>
-		<key>5EB7D1DA-4576-4D69-9B82-F6B3E4D785EA</key>
+		<key>284F6AAD-8FE7-44A6-AAE4-62A0F8BEE779</key>
+		<array/>
+		<key>487D7A3C-11A7-416D-8F0F-21097B979E4C</key>
 		<array>
 			<dict>
 				<key>destinationuid</key>
-				<string>903468CF-6A26-4DB2-B74D-BA10E1A3F11D</string>
+				<string>284F6AAD-8FE7-44A6-AAE4-62A0F8BEE779</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
 				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>8FE8475E-6310-49A4-967E-D6CCE73A86AC</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>A78568B3-C360-4A35-A46A-0D91172F86EF</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>487D7A3C-11A7-416D-8F0F-21097B979E4C</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>A78568B3-C360-4A35-A46A-0D91172F86EF</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>CAF59F43-6C28-47BF-B3DA-1A65C2198F2F</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
 			</dict>
 		</array>
 	</dict>
 	<key>createdby</key>
-	<string>Wenson Smith</string>
+	<string>WensonSmith</string>
 	<key>description</key>
 	<string>Translate using Youdao API</string>
 	<key>disabled</key>
@@ -31,24 +73,82 @@
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>autopaste</key>
+				<false/>
+				<key>clipboardtext</key>
+				<string>{query}</string>
+				<key>transient</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.clipboard</string>
+			<key>uid</key>
+			<string>CAF59F43-6C28-47BF-B3DA-1A65C2198F2F</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>inputstring</key>
+				<string>{query}</string>
+				<key>matchcasesensitive</key>
+				<false/>
+				<key>matchmode</key>
+				<integer>2</integer>
+				<key>matchstring</key>
+				<string>^(?!~).+</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.filter</string>
+			<key>uid</key>
+			<string>A78568B3-C360-4A35-A46A-0D91172F86EF</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>alfredfiltersresults</key>
+				<false/>
 				<key>argumenttype</key>
 				<integer>0</integer>
 				<key>escaping</key>
-				<integer>0</integer>
+				<integer>100</integer>
 				<key>keyword</key>
 				<string>yd</string>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<false/>
+				<key>queuedelaymode</key>
+				<integer>1</integer>
+				<key>queuemode</key>
+				<integer>2</integer>
 				<key>runningsubtext</key>
-				<string>正在翻译</string>
+				<string>正在翻译···</string>
 				<key>script</key>
-				<string>require_once('translate.php');
+				<string>&lt;?php
 
-$translate = new Translate();
+require('YoudaoTranslate.php');
 
-$translate-&gt;getTranslation('{query}');
+$keys = [
+	['key' =&gt; '541488500',  'keyfrom'=&gt;'ScentRemains'],
+	['key' =&gt; '164530784',  'keyfrom'=&gt;'SeekBetterMe'],
+	['key' =&gt; '1813511369', 'keyfrom'=&gt;'Bro2Win'],
+	['key' =&gt; '2046568483', 'keyfrom'=&gt;'SanXiShi']
+];
 
-</string>
+$translator = new YoudaoTranslate($keys);
+echo $translator-&gt;translate($argv[1]);
+
+?&gt;</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
 				<key>subtext</key>
-				<string>请输入翻译内容</string>
+				<string>请输入要翻译的内容</string>
 				<key>title</key>
 				<string>有道翻译</string>
 				<key>type</key>
@@ -59,40 +159,96 @@ $translate-&gt;getTranslation('{query}');
 			<key>type</key>
 			<string>alfred.workflow.input.scriptfilter</string>
 			<key>uid</key>
-			<string>5EB7D1DA-4576-4D69-9B82-F6B3E4D785EA</string>
+			<string>8FE8475E-6310-49A4-967E-D6CCE73A86AC</string>
 			<key>version</key>
-			<integer>0</integer>
+			<integer>2</integer>
 		</dict>
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>autopaste</key>
+				<key>concurrently</key>
 				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>query="{query}"
+
+echo -n $query | say</string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
 			</dict>
 			<key>type</key>
-			<string>alfred.workflow.output.clipboard</string>
+			<string>alfred.workflow.action.script</string>
 			<key>uid</key>
-			<string>903468CF-6A26-4DB2-B74D-BA10E1A3F11D</string>
+			<string>284F6AAD-8FE7-44A6-AAE4-62A0F8BEE779</string>
 			<key>version</key>
-			<integer>0</integer>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>inputstring</key>
+				<string>{query}</string>
+				<key>matchcasesensitive</key>
+				<false/>
+				<key>matchmode</key>
+				<integer>2</integer>
+				<key>matchstring</key>
+				<string>^~</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.filter</string>
+			<key>uid</key>
+			<string>487D7A3C-11A7-416D-8F0F-21097B979E4C</string>
+			<key>version</key>
+			<integer>1</integer>
 		</dict>
 	</array>
 	<key>readme</key>
 	<string></string>
 	<key>uidata</key>
 	<dict>
-		<key>5EB7D1DA-4576-4D69-9B82-F6B3E4D785EA</key>
+		<key>284F6AAD-8FE7-44A6-AAE4-62A0F8BEE779</key>
 		<dict>
+			<key>xpos</key>
+			<integer>570</integer>
 			<key>ypos</key>
-			<real>20</real>
+			<integer>260</integer>
 		</dict>
-		<key>903468CF-6A26-4DB2-B74D-BA10E1A3F11D</key>
+		<key>487D7A3C-11A7-416D-8F0F-21097B979E4C</key>
 		<dict>
+			<key>xpos</key>
+			<integer>370</integer>
 			<key>ypos</key>
-			<real>20</real>
+			<integer>290</integer>
+		</dict>
+		<key>8FE8475E-6310-49A4-967E-D6CCE73A86AC</key>
+		<dict>
+			<key>xpos</key>
+			<integer>160</integer>
+			<key>ypos</key>
+			<integer>190</integer>
+		</dict>
+		<key>A78568B3-C360-4A35-A46A-0D91172F86EF</key>
+		<dict>
+			<key>xpos</key>
+			<integer>370</integer>
+			<key>ypos</key>
+			<integer>160</integer>
+		</dict>
+		<key>CAF59F43-6C28-47BF-B3DA-1A65C2198F2F</key>
+		<dict>
+			<key>xpos</key>
+			<integer>570</integer>
+			<key>ypos</key>
+			<integer>130</integer>
 		</dict>
 	</dict>
 	<key>webaddress</key>
-	<string>http://www.seekbetter.me</string>
+	<string>https://seekbetter.me</string>
 </dict>
 </plist>
