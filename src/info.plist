@@ -133,10 +133,7 @@
 require('YoudaoTranslate.php');
 
 $keys = [
-	['key' =&gt; '541488500',  'keyfrom'=&gt;'ScentRemains'],
-	['key' =&gt; '164530784',  'keyfrom'=&gt;'SeekBetterMe'],
-	['key' =&gt; '1813511369', 'keyfrom'=&gt;'Bro2Win'],
-	['key' =&gt; '2046568483', 'keyfrom'=&gt;'SanXiShi']
+	['appKey' =&gt; '2280cdb033304a40', 'secret' =&gt; '9WmJZbNe9JaYJl8dzzaZbmcYdsf6VJ7c']
 ];
 
 $translator = new YoudaoTranslate($keys);
