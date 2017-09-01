@@ -38,12 +38,12 @@ class YoudaoTranslate
     public function translate($query)
     {
         $this->query = $query;
-        $url = $this->getQueryUrl($query);
+        $url = $this->getOpenQueryUrl($query);
 
         $response = $this->workflow->request($url);
         $this->result   = json_decode($response);
 
-        if( empty($this->result) || $this->result->errorCode !== 0){
+        if( empty($this->result) || ($this->result->errorCode !== "0" && $this->result->errorCode !== 0)){
             //证明翻译出错
             $this->addItem('翻译出错', $response, $response);
         }else{
@@ -187,6 +187,22 @@ class YoudaoTranslate
 
         $key = $this->keys[array_rand($this->keys)];
         $key['q'] = $query;
+
+        return $api.http_build_query($key);
+    }
+
+    /**
+     * 组装网易智云请求地址
+     * @return String
+     */
+    private function getOpenQueryUrl($query)
+    {
+        $api = "https://openapi.youdao.com/api?from=auto&to=auto&";
+
+        $key = $this->keys[array_rand($this->keys)];
+        $key['q'] = $query;
+        $key['salt'] = strval(rand(1,100000));
+        $key['sign'] = md5($key["appKey"] . $key['q'] . $key['salt'] . $key['secret']);
 
         return $api.http_build_query($key);
     }
