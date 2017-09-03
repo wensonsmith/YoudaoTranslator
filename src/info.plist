@@ -8,13 +8,26 @@
 	<string>Tools</string>
 	<key>connections</key>
 	<dict>
+		<key>1631393E-5B53-4C8B-AF64-A04B687438DF</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>284F6AAD-8FE7-44A6-AAE4-62A0F8BEE779</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
 		<key>284F6AAD-8FE7-44A6-AAE4-62A0F8BEE779</key>
 		<array/>
 		<key>487D7A3C-11A7-416D-8F0F-21097B979E4C</key>
 		<array>
 			<dict>
 				<key>destinationuid</key>
-				<string>284F6AAD-8FE7-44A6-AAE4-62A0F8BEE779</string>
+				<string>1631393E-5B53-4C8B-AF64-A04B687438DF</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -51,6 +64,19 @@
 			<dict>
 				<key>destinationuid</key>
 				<string>CAF59F43-6C28-47BF-B3DA-1A65C2198F2F</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>D7047D97-8226-43FB-8656-4CF365DB3FE3</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>8FE8475E-6310-49A4-967E-D6CCE73A86AC</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -109,6 +135,37 @@
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>action</key>
+				<integer>0</integer>
+				<key>argument</key>
+				<integer>1</integer>
+				<key>focusedappvariable</key>
+				<false/>
+				<key>focusedappvariablename</key>
+				<string></string>
+				<key>hotkey</key>
+				<integer>-1</integer>
+				<key>hotmod</key>
+				<integer>524288</integer>
+				<key>hotstring</key>
+				<string>double tap</string>
+				<key>leftcursor</key>
+				<false/>
+				<key>modsmode</key>
+				<integer>0</integer>
+				<key>relatedAppsMode</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.trigger.hotkey</string>
+			<key>uid</key>
+			<string>D7047D97-8226-43FB-8656-4CF365DB3FE3</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
 				<key>alfredfiltersresults</key>
 				<false/>
 				<key>argumenttype</key>
@@ -133,6 +190,7 @@
 require('YoudaoTranslate.php');
 
 $keys = [
+	['appKey' =&gt; '043006a9363d8f0c', 'secret' =&gt; 'xKbfHSuE65fJE71jDmAzLtY1WwWbGysd'],
 	['appKey' =&gt; '2280cdb033304a40', 'secret' =&gt; '9WmJZbNe9JaYJl8dzzaZbmcYdsf6VJ7c']
 ];
 
@@ -168,9 +226,10 @@ echo $translator-&gt;translate($argv[1]);
 				<key>escaping</key>
 				<integer>102</integer>
 				<key>script</key>
-				<string>query="{query}"
-
-echo -n $query | say</string>
+				<string>cd $TMPDIR
+curl -o {query} "https://dict.youdao.com/dictvoice?audio={query}&amp;type=1"
+afplay {query}
+rm {query}</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>
@@ -204,45 +263,116 @@ echo -n $query | say</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>matchmode</key>
+				<integer>0</integer>
+				<key>matchstring</key>
+				<string>~</string>
+				<key>replacestring</key>
+				<string></string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.replace</string>
+			<key>uid</key>
+			<string>1631393E-5B53-4C8B-AF64-A04B687438DF</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>query="{query}"
+
+echo -n $query | say $1 -v Samantha</string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>6B0F6A32-751F-4071-A1E8-76A2E9486962</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
 	</array>
 	<key>readme</key>
 	<string></string>
 	<key>uidata</key>
 	<dict>
-		<key>284F6AAD-8FE7-44A6-AAE4-62A0F8BEE779</key>
+		<key>1631393E-5B53-4C8B-AF64-A04B687438DF</key>
 		<dict>
 			<key>xpos</key>
-			<integer>570</integer>
+			<integer>640</integer>
 			<key>ypos</key>
-			<integer>260</integer>
+			<integer>270</integer>
+		</dict>
+		<key>284F6AAD-8FE7-44A6-AAE4-62A0F8BEE779</key>
+		<dict>
+			<key>colorindex</key>
+			<integer>7</integer>
+			<key>note</key>
+			<string>在线发音</string>
+			<key>xpos</key>
+			<integer>740</integer>
+			<key>ypos</key>
+			<integer>240</integer>
 		</dict>
 		<key>487D7A3C-11A7-416D-8F0F-21097B979E4C</key>
 		<dict>
 			<key>xpos</key>
-			<integer>370</integer>
+			<integer>540</integer>
 			<key>ypos</key>
-			<integer>290</integer>
+			<integer>270</integer>
+		</dict>
+		<key>6B0F6A32-751F-4071-A1E8-76A2E9486962</key>
+		<dict>
+			<key>colorindex</key>
+			<integer>5</integer>
+			<key>note</key>
+			<string>本地发音</string>
+			<key>xpos</key>
+			<integer>740</integer>
+			<key>ypos</key>
+			<integer>390</integer>
 		</dict>
 		<key>8FE8475E-6310-49A4-967E-D6CCE73A86AC</key>
 		<dict>
 			<key>xpos</key>
-			<integer>160</integer>
+			<integer>330</integer>
 			<key>ypos</key>
-			<integer>190</integer>
+			<integer>170</integer>
 		</dict>
 		<key>A78568B3-C360-4A35-A46A-0D91172F86EF</key>
 		<dict>
 			<key>xpos</key>
-			<integer>370</integer>
+			<integer>540</integer>
 			<key>ypos</key>
-			<integer>160</integer>
+			<integer>140</integer>
 		</dict>
 		<key>CAF59F43-6C28-47BF-B3DA-1A65C2198F2F</key>
 		<dict>
 			<key>xpos</key>
-			<integer>570</integer>
+			<integer>740</integer>
 			<key>ypos</key>
+			<integer>110</integer>
+		</dict>
+		<key>D7047D97-8226-43FB-8656-4CF365DB3FE3</key>
+		<dict>
+			<key>xpos</key>
 			<integer>130</integer>
+			<key>ypos</key>
+			<integer>170</integer>
 		</dict>
 	</dict>
 	<key>webaddress</key>
