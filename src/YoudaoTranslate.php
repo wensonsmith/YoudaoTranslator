@@ -109,7 +109,7 @@ class YoudaoTranslate
     {
         foreach ($web as $item) {
             $_title = join(',', $item->value); 
-            $this->addItem($_title, $item->key);
+            $this->addItem($_title, $item->key, $_title);
         }
     }
 
