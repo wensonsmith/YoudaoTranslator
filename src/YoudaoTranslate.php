@@ -24,6 +24,7 @@ class YoudaoTranslate
     private $keys;
     private $result;
     private $query;
+    private $pronounce;
 
     public function __construct($keys)
     {
@@ -38,6 +39,11 @@ class YoudaoTranslate
     public function translate($query)
     {
         $this->query = $query;
+        // 如果输入的是 yd * ，列出查询记录最近10条
+        if ($this->query === '*'){
+            return $this->getHistory();
+        }
+
         $url = $this->getOpenQueryUrl($query);
 
         $response = $this->workflow->request($url);
@@ -47,6 +53,9 @@ class YoudaoTranslate
             //证明翻译出错
             $this->addItem('翻译出错', $response, $response);
         }else{
+            // 获取要发音的单词
+            $this->getPronounce();
+
             if(isset($this->result->translation)){
                 $this->parseTranslation($this->result->translation);
             }
@@ -70,7 +79,7 @@ class YoudaoTranslate
      */
     private function parseTranslation($translation)
     {
-        $this->addItem($translation[0], null, $translation[0]);
+        $this->addItem($translation[0], null);
     }
 
     /**
@@ -81,11 +90,26 @@ class YoudaoTranslate
     private function parseBasic($basic)
     {
         foreach ($basic->explains as $explain) {
-            $this->addItem($explain, null, $explain);
+            $this->addItem($explain, null);
         }
 
         if(isset($basic->phonetic)){
-            $this->getPronounce($basic);
+            // 获取音标，同时确定要发音的单词
+            $phonetic = $this->getPhonetic($basic);
+            $this->addItem($phonetic, '回车可听发音', '~'.$this->pronounce);
+        }
+    }
+
+    /**
+     * 解析 Web 字段， 网络释义
+     * @param Web Object
+     * @return array
+     */
+    private function parseWeb($web)
+    {
+        foreach ($web as $item) {
+            $_title = join(',', $item->value); 
+            $this->addItem($_title, $item->key);
         }
     }
 
@@ -107,39 +131,54 @@ class YoudaoTranslate
     }
 
     /**
-     * 从 basic 字段中获取发音
+     * 从 basic 字段中获取音标
      * @param Basic Object
      * @return array
      */
-    public function getPronounce($basic)
+    public function getPhonetic($basic)
     {
         $phonetic = '';
-        if (isset($basic->{'phonetic'}))
+        // 中文才会用到这个音标y
+        if ($this->isChinese($this->query) && isset($basic->{'phonetic'}))
             $phonetic .= "[".$basic->{'phonetic'}."]";
         if (isset($basic->{'us-phonetic'}))
             $phonetic .= " [美: ".$basic->{'us-phonetic'}."]";
         if (isset($basic->{'uk-phonetic'}))
             $phonetic .= " [英: ".$basic->{'uk-phonetic'}."]";
-        
-        if($this->isChinese($this->query)){
-             $pronounce = $this->query.'  '.$this->result->translation[0];
-         }else{
-             $pronounce = $this->query;
-         }
-        $this->addItem($phonetic, '回车可听发音', '~'.$pronounce);
+
+        return $phonetic;
     }
 
     /**
-     * 解析 Web 字段， 网络释义
-     * @param Web Object
-     * @return array
+     * 获取要发音的单词
      */
-    private function parseWeb($web)
+    public function getPronounce()
     {
-        foreach ($web as $item) {
-            $_title = join(',', $item->value);
-            $this->addItem($_title, $item->key, $_title);
+        if($this->isChinese($this->query)){
+            $this->pronounce = $this->result->translation[0];
+        }else{
+            $this->pronounce = $this->query;
         }
+    }
+
+    /**
+    * 获取查询记录的最近10条
+    */
+    private function getHistory()
+    {
+        $historyFile = 'history.log';
+        file_put_contents($historyFile,'what', FILE_APPEND);
+    }
+
+    /**
+    * 保存翻译结果
+    * @param translation
+    * @return array
+    */
+    private function saveHistory($translation)
+    {
+        $history = [];
+        $history;
     }
 
     /**
@@ -149,8 +188,9 @@ class YoudaoTranslate
      * @param $arg 传递值
      * @return array
      */
-    private function addItem($title, $subtitle, $arg)
+    private function addItem($title, $subtitle, $arg = null)
     {
+        $arg           = $arg ? $arg : $this->pronounce;
         $_subtitle     = $subtitle ? $subtitle : $this->query;
         $_quicklookurl = 'http://youdao.com/w/'.urlencode($this->query);
         $_icon         = $this->startsWith($arg, '~') ? 'translate-say.png' : 'translate.png';
