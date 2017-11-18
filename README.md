@@ -24,7 +24,13 @@ YoudaoTranslate | 有道翻译
 
 ### 6. 双击 `option` 键可以翻译选中内容
 
-## 二、推荐设置
+## 二、下载使用
+1. [Github 直接下载](https://github.com/wensonsmith/YoudaoTranslate/raw/master/YoudaoTranslate.alfredworkflow)
+1. [百度网盘下载-YoudaoTransalte.alfredworkflow](https://pan.baidu.com/s/1gfu6mkj)
+
+下载后双击导入即可使用。
+
+## 三、推荐设置
 
 ![](screenshot/suggestion_1.png)
 
@@ -32,7 +38,7 @@ YoudaoTranslate | 有道翻译
 
 ![](screenshot/suggestion.png)
 
-## 三、 配置KEYS
+## 四、 配置KEYS
 
 > 2017年9月3日更新
 > 由于有道翻译 api 迁移到了有道智云，所以大家需要去[有道智云](http://ai.youdao.com/)进行注册然后创建应用了。步骤如下：
@@ -47,7 +53,7 @@ YoudaoTranslate | 有道翻译
 ![screenshot_6](screenshot/screenshot_6.png)
 
 
-## 四、更新日志  
+## 五、更新日志  
 
 - 2017年11月19日
   - 优化发音，现在可以按住 `cmd` + `回车` 进行发音 （#17）
@@ -67,10 +73,7 @@ YoudaoTranslate | 有道翻译
 
   内置四个api key, 随机调用解决有道每小时1000次调用次数的限制。
 
-
-
-
-### 五、 使用库和参考资料
+### 六、 使用库和参考资料
 
 - https://github.com/joetannenbaum/alfred-workflow
 - https://www.alfredapp.com/help/workflows/inputs/
