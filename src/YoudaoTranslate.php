@@ -25,11 +25,13 @@ class YoudaoTranslate
     private $result;
     private $query;
     private $pronounce;
+    private $historyFile;
 
     public function __construct($keys)
     {
         $this->workflow = new Workflow;
         $this->keys = $keys;
+        $this->historyFile = 'YoudaoTranslate-'. @date('Ym') .'.log';
     }
 
     /**
@@ -107,9 +109,14 @@ class YoudaoTranslate
      */
     private function parseWeb($web)
     {
-        foreach ($web as $item) {
-            $_title = join(',', $item->value); 
-            $this->addItem($_title, $item->key, $_title);
+        foreach ($web as $key => $item) {
+            $_title = join(',', $item->value);
+            if ($key === 0) {
+                $result = $this->addItem($_title, $item->key, $key, true);
+                $this->saveHistory($result);
+            } else {
+                $this->addItem($_title, $item->key, $_title);
+            }
         }
     }
 
@@ -162,12 +169,29 @@ class YoudaoTranslate
     }
 
     /**
-    * 获取查询记录的最近10条
+    * 获取查询记录的最近 9 条
     */
     private function getHistory()
     {
-        $historyFile = 'history.log';
-        file_put_contents($historyFile,'what', FILE_APPEND);
+        $history = [];
+        $lastTenLines = $this->getLastLines($this->historyFile, 9);
+        if (!empty($lastTenLines)) {
+            foreach ($lastTenLines as $line) {
+                $result = json_decode($line);
+                if (strlen($result->subtitle) > 1) {
+                    $history[] = $result;
+                }
+            }
+            
+            $output = [
+                'items' => $history
+            ];
+
+            return json_encode($output);
+        } else {
+            $this->addItem('没有历史纪录', 'No History');
+            return $this->workflow->output();
+        }
     }
 
     /**
@@ -177,8 +201,51 @@ class YoudaoTranslate
     */
     private function saveHistory($translation)
     {
-        $history = [];
-        $history;
+        @file_put_contents($this->historyFile, json_encode($translation) . "\n", FILE_APPEND);
+    }
+
+    /**
+     * 取文件最后$n行
+     * @param string $file 文件路径
+     * @param int $line 最后几行
+     * @return mixed 成功则返回字符串
+     */
+    private function getLastLines($filename,$n)
+    {
+        if (!$handler = @fopen($filename, 'r')) {
+            return false;
+        }
+
+        $eof = "";
+        $lines = [];
+        //忽略最后的 \n
+        $position = -2;
+
+        while($n>0){
+            while($eof!="\n"){
+                if(!fseek($handler, $position, SEEK_END)){
+                    $eof = fgetc($handler);
+                    $position--;
+                } else {
+                    break;
+                }
+            }
+
+            if ($line = fgets($handler)) {
+                $lines[] = $line;
+                $eof="";
+                $n--;
+            } else {
+                //当游标超限 fseek 报错以后，无法 fgets($fp), 需要将游标向后移动一位
+                fseek($handler, $position+1, SEEK_END);
+                if ($line = fgets($handler)) {
+                    $lines[] = $line;
+                }
+                break;
+            }
+
+        }
+        return $lines;
     }
 
     /**
@@ -188,20 +255,24 @@ class YoudaoTranslate
      * @param $arg 传递值
      * @return array
      */
-    private function addItem($title, $subtitle, $arg = null)
+    private function addItem($title, $subtitle, $arg = null, $toArray = false)
     {
         $arg           = $arg ? $arg : $this->pronounce;
         $_subtitle     = $subtitle ? $subtitle : $this->query;
         $_quicklookurl = 'http://youdao.com/w/'.urlencode($this->query);
         $_icon         = $this->startsWith($arg, '~') ? 'translate-say.png' : 'translate.png';
 
-        $this->workflow->result()
-                 ->title($title)
-                 ->subtitle($_subtitle)
-                 ->quicklookurl($_quicklookurl)
-                 ->arg($arg)
-                 ->icon($_icon)
-                 ->text('copy', $title);
+        $result = $this->workflow->result()
+                    ->title($title)
+                    ->subtitle($_subtitle)
+                    ->quicklookurl($_quicklookurl)
+                    ->arg($arg)
+                    ->icon($_icon)
+                    ->text('copy', $title);
+        
+        if ($toArray) {
+            return $result->toArray();
+        }
     }
 
 
