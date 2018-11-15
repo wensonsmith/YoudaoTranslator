@@ -257,7 +257,7 @@ class YoudaoTranslate
      */
     private function addItem($title, $subtitle, $arg = null, $toArray = false)
     {
-        $arg           = $arg ? $arg : $this->pronounce;
+        $arg           = $arg ? $arg : $title;
         $_subtitle     = $subtitle ? $subtitle : $this->query;
         $_quicklookurl = 'http://youdao.com/w/'.urlencode($this->query);
         $_icon         = $this->startsWith($arg, '~') ? 'translate-say.png' : 'translate.png';
