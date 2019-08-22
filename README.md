@@ -22,47 +22,69 @@ YoudaoTranslate | 有道翻译
 
 ![screenshot_4](screenshot/screenshot_4.gif)
 
-### 6. 双击 `option` 键可以翻译选中内容
+### 6. 双击设置的 `Hotkey` 键可以翻译选中内容
+
+
 
 ## 二、下载使用
-1. [Github 直接下载](https://github.com/wensonsmith/YoudaoTranslate/raw/master/YoudaoTranslate.alfredworkflow)
-1. [百度网盘下载-YoudaoTransalte.alfredworkflow](https://pan.baidu.com/s/1gfu6mkj)
+1. [GitHub Releases 直接下载](https://github.com/wensonsmith/YoudaoTranslate/releases)
 
-下载后双击导入即可使用。
+   下载解压后双击 `Youdao Translate.alfredworkflow` 导入即可使用。
+
+1. 把 GitHub 项目中 src 目录内容下载到 `~/Library/Application Support/Alfred 3/Alfred.alfredpreferences/workflows`
+
 
 ## 三、推荐设置
 
-![](screenshot/suggestion_1.png)
+Hotkey 设置为 double Option
 
-![](https://user-images.githubusercontent.com/2544185/32979442-4b17a476-cc90-11e7-934a-64b6d84b46df.png)
 
-![](screenshot/suggestion.png)
 
-## 四、 配置KEYS
+## 四、 配置有道翻译 API KEYS
 
 > 2017年9月3日更新
 > 由于有道翻译 api 迁移到了有道智云，所以大家需要去[有道智云](http://ai.youdao.com/)进行注册然后创建应用了。步骤如下：
 
-1. 注册有道智云帐号
-2. 创建一个自然语言翻译服务
-3. 创建一个应用并绑定第二步创建的服务
+1. 注册[有道智云](https://ai.youdao.com/)帐号
+
+2. 创建一个[自然语言翻译服务](https://ai.youdao.com/fanyi-services.s)
+
+3. 创建一个[有道云应用](https://ai.youdao.com/appmgr.s)并绑定第二步创建的服务
+
 4. 这样就可以获得应用(appKey)和密钥(secret)了
 
-![screenshot_5](screenshot/screenshot_5.png)
+   [应用](https://ai.youdao.com/appmgr.s) - 应用详情 - 应用ID appKey, 应用密钥 secret
 
-![screenshot_6](screenshot/screenshot_6.png)
+5. 把变量填入 workflow 右上角的 [X] 点开后的配置框中
+
+
+![var-config-step-1](screenshot/var-config-step-1.png)
+
+![var-config-step-2](screenshot/var-config-step-2.png)
+
 
 
 ## 五、更新日志  
 
-- 2017年11月19日
-  - 优化发音，现在可以按住 `cmd` + `回车` 进行发音 （#17）
-  - 增加最近查询记录功能， 输入 `yd *` 可以列出最近查询的 9 个单词 （#10， #16）
+- 2019年8月23日
+  
+  - 使用 [alfred 自带 variables](https://www.alfredapp.com/help/workflows/advanced/variables/) 功能配置有道 API Keys
 
+- 2019年8月22日
+  
+  - 修复中译英时，每项选中 Enter 时直接复制内容为对应不同项翻译，而非固定第一项翻译
+- 英译中时，固定第一项 选中内容 为英语原文，cmd + Enter 可以直接发音
+  
+- 2017年11月19日
+  
+  - 优化发音，现在可以按住 `cmd` + `回车` 进行发音 （#17）
+- 增加最近查询记录功能， 输入 `yd *` 可以列出最近查询的 9 个单词 （#10， #16）
+  
 - 2017年9月3日
   - 更新 api 为有道智云（thanks @newle）#12
   - 优化发音，添加了线上发音
   - 添加了双击翻译选中文字的热键
+  
 - 2017年1月13日
 
   - 更新到Alfred3
@@ -77,3 +99,4 @@ YoudaoTranslate | 有道翻译
 
 - https://github.com/joetannenbaum/alfred-workflow
 - https://www.alfredapp.com/help/workflows/inputs/
+- https://www.alfredapp.com/help/workflows/advanced/variables/

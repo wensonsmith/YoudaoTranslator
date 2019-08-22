@@ -143,6 +143,64 @@
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>alfredfiltersresults</key>
+				<false/>
+				<key>alfredfiltersresultsmatchmode</key>
+				<integer>0</integer>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
+				<key>argumenttype</key>
+				<integer>0</integer>
+				<key>escaping</key>
+				<integer>100</integer>
+				<key>keyword</key>
+				<string>yd</string>
+				<key>queuedelaycustom</key>
+				<integer>1</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<false/>
+				<key>queuedelaymode</key>
+				<integer>2</integer>
+				<key>queuemode</key>
+				<integer>2</integer>
+				<key>runningsubtext</key>
+				<string>正在翻译···</string>
+				<key>script</key>
+				<string>&lt;?php
+
+require('YoudaoTranslate.php');
+
+$keys = [
+	['appKey' =&gt; getenv('youdao_appkey'), 'secret' =&gt; getenv('youdao_secret')]
+];
+
+$translator = new YoudaoTranslate($keys);
+echo $translator-&gt;translate($argv[1]);
+
+?&gt;</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>subtext</key>
+				<string>请输入要翻译的内容</string>
+				<key>title</key>
+				<string>有道翻译</string>
+				<key>type</key>
+				<integer>1</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>8FE8475E-6310-49A4-967E-D6CCE73A86AC</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
 				<key>concurrently</key>
 				<false/>
 				<key>escaping</key>
@@ -178,6 +236,10 @@ echo -n $query | say $1 -v Samantha</string>
 				<false/>
 				<key>focusedappvariablename</key>
 				<string></string>
+				<key>hotkey</key>
+				<integer>0</integer>
+				<key>hotmod</key>
+				<integer>0</integer>
 				<key>leftcursor</key>
 				<false/>
 				<key>modsmode</key>
@@ -195,57 +257,19 @@ echo -n $query | say $1 -v Samantha</string>
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>alfredfiltersresults</key>
-				<false/>
-				<key>argumenttype</key>
+				<key>matchmode</key>
 				<integer>0</integer>
-				<key>escaping</key>
-				<integer>100</integer>
-				<key>keyword</key>
-				<string>yd</string>
-				<key>queuedelaycustom</key>
-				<integer>1</integer>
-				<key>queuedelayimmediatelyinitially</key>
-				<false/>
-				<key>queuedelaymode</key>
-				<integer>2</integer>
-				<key>queuemode</key>
-				<integer>2</integer>
-				<key>runningsubtext</key>
-				<string>正在翻译···</string>
-				<key>script</key>
-				<string>&lt;?php
-
-require('YoudaoTranslate.php');
-
-$keys = [
-	['appKey' =&gt; '043006a9363d8f0c', 'secret' =&gt; 'xKbfHSuE65fJE71jDmAzLtY1WwWbGysd'],
-	['appKey' =&gt; '2280cdb033304a40', 'secret' =&gt; '9WmJZbNe9JaYJl8dzzaZbmcYdsf6VJ7c']
-];
-
-$translator = new YoudaoTranslate($keys);
-echo $translator-&gt;translate($argv[1]);
-
-?&gt;</string>
-				<key>scriptargtype</key>
-				<integer>1</integer>
-				<key>scriptfile</key>
+				<key>matchstring</key>
+				<string>~</string>
+				<key>replacestring</key>
 				<string></string>
-				<key>subtext</key>
-				<string>请输入要翻译的内容</string>
-				<key>title</key>
-				<string>有道翻译</string>
-				<key>type</key>
-				<integer>1</integer>
-				<key>withspace</key>
-				<true/>
 			</dict>
 			<key>type</key>
-			<string>alfred.workflow.input.scriptfilter</string>
+			<string>alfred.workflow.utility.replace</string>
 			<key>uid</key>
-			<string>8FE8475E-6310-49A4-967E-D6CCE73A86AC</string>
+			<string>1631393E-5B53-4C8B-AF64-A04B687438DF</string>
 			<key>version</key>
-			<integer>2</integer>
+			<integer>1</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -263,23 +287,6 @@ echo $translator-&gt;translate($argv[1]);
 			<string>alfred.workflow.utility.filter</string>
 			<key>uid</key>
 			<string>487D7A3C-11A7-416D-8F0F-21097B979E4C</string>
-			<key>version</key>
-			<integer>1</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>matchmode</key>
-				<integer>0</integer>
-				<key>matchstring</key>
-				<string>~</string>
-				<key>replacestring</key>
-				<string></string>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.utility.replace</string>
-			<key>uid</key>
-			<string>1631393E-5B53-4C8B-AF64-A04B687438DF</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
@@ -311,7 +318,27 @@ rm {query}</string>
 		</dict>
 	</array>
 	<key>readme</key>
-	<string></string>
+	<string># 配置有道 KEYS
+
+&gt; 2017年9月3日更新 由于有道翻译 api 迁移到了有道智云，所以大家需要去有道智云进行注册然后创建应用了。步骤如下
+
+1.注册有道智云帐号
+
+  https://ai.youdao.com/
+
+2. 创建一个自然语言翻译服务
+
+  https://ai.youdao.com/fanyi-services.s
+
+3. 创建一个应用并绑定第二步创建的服务
+
+  https://ai.youdao.com/appmgr.s
+
+4. 这样就可以获得应用(appKey)和密钥(secret)了
+
+  应用详情 - 应用ID appKey, 应用密钥 secret
+
+5. 把变量填入 workflow 右上角的 [X] 点开后的配置框中</string>
 	<key>uidata</key>
 	<dict>
 		<key>1631393E-5B53-4C8B-AF64-A04B687438DF</key>
@@ -379,6 +406,20 @@ rm {query}</string>
 			<integer>170</integer>
 		</dict>
 	</dict>
+	<key>variables</key>
+	<dict>
+		<key>youdao_appkey</key>
+		<string></string>
+		<key>youdao_secret</key>
+		<string></string>
+	</dict>
+	<key>variablesdontexport</key>
+	<array>
+		<string>youdao_appkey</string>
+		<string>youdao_secret</string>
+	</array>
+	<key>version</key>
+	<string></string>
 	<key>webaddress</key>
 	<string>https://seekbetter.me</string>
 </dict>
