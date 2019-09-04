@@ -4,15 +4,13 @@
 <dict>
 	<key>bundleid</key>
 	<string>Youdao.Translator</string>
-	<key>category</key>
-	<string>Tools</string>
 	<key>connections</key>
 	<dict>
 		<key>1631393E-5B53-4C8B-AF64-A04B687438DF</key>
 		<array>
 			<dict>
 				<key>destinationuid</key>
-				<string>284F6AAD-8FE7-44A6-AAE4-62A0F8BEE779</string>
+				<string>6B0F6A32-751F-4071-A1E8-76A2E9486962</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -47,6 +45,16 @@
 				<string></string>
 				<key>vitoclose</key>
 				<false/>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>6B0F6A32-751F-4071-A1E8-76A2E9486962</string>
+				<key>modifiers</key>
+				<integer>1048576</integer>
+				<key>modifiersubtext</key>
+				<string>🔊 {query}</string>
+				<key>vitoclose</key>
+				<true/>
 			</dict>
 			<dict>
 				<key>destinationuid</key>
@@ -135,6 +143,33 @@
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>query="{query}"
+
+echo $query
+
+echo -n $query | say $1 -v Samantha</string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>6B0F6A32-751F-4071-A1E8-76A2E9486962</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
 				<key>action</key>
 				<integer>0</integer>
 				<key>argument</key>
@@ -143,12 +178,6 @@
 				<false/>
 				<key>focusedappvariablename</key>
 				<string></string>
-				<key>hotkey</key>
-				<integer>-1</integer>
-				<key>hotmod</key>
-				<integer>524288</integer>
-				<key>hotstring</key>
-				<string>double tap</string>
 				<key>leftcursor</key>
 				<false/>
 				<key>modsmode</key>
@@ -175,11 +204,11 @@
 				<key>keyword</key>
 				<string>yd</string>
 				<key>queuedelaycustom</key>
-				<integer>3</integer>
+				<integer>1</integer>
 				<key>queuedelayimmediatelyinitially</key>
 				<false/>
 				<key>queuedelaymode</key>
-				<integer>1</integer>
+				<integer>2</integer>
 				<key>queuemode</key>
 				<integer>2</integer>
 				<key>runningsubtext</key>
@@ -215,32 +244,6 @@ echo $translator-&gt;translate($argv[1]);
 			<string>alfred.workflow.input.scriptfilter</string>
 			<key>uid</key>
 			<string>8FE8475E-6310-49A4-967E-D6CCE73A86AC</string>
-			<key>version</key>
-			<integer>2</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>concurrently</key>
-				<false/>
-				<key>escaping</key>
-				<integer>102</integer>
-				<key>script</key>
-				<string>cd $TMPDIR
-curl -o {query} "https://dict.youdao.com/dictvoice?audio={query}&amp;type=1"
-afplay {query}
-rm {query}</string>
-				<key>scriptargtype</key>
-				<integer>0</integer>
-				<key>scriptfile</key>
-				<string></string>
-				<key>type</key>
-				<integer>0</integer>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.action.script</string>
-			<key>uid</key>
-			<string>284F6AAD-8FE7-44A6-AAE4-62A0F8BEE779</string>
 			<key>version</key>
 			<integer>2</integer>
 		</dict>
@@ -288,9 +291,10 @@ rm {query}</string>
 				<key>escaping</key>
 				<integer>102</integer>
 				<key>script</key>
-				<string>query="{query}"
-
-echo -n $query | say $1 -v Samantha</string>
+				<string>cd $TMPDIR
+curl -o {query} "https://dict.youdao.com/dictvoice?audio={query}&amp;type=1"
+afplay {query}
+rm {query}</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>
@@ -301,7 +305,7 @@ echo -n $query | say $1 -v Samantha</string>
 			<key>type</key>
 			<string>alfred.workflow.action.script</string>
 			<key>uid</key>
-			<string>6B0F6A32-751F-4071-A1E8-76A2E9486962</string>
+			<string>284F6AAD-8FE7-44A6-AAE4-62A0F8BEE779</string>
 			<key>version</key>
 			<integer>2</integer>
 		</dict>
@@ -326,12 +330,12 @@ echo -n $query | say $1 -v Samantha</string>
 			<key>xpos</key>
 			<integer>740</integer>
 			<key>ypos</key>
-			<integer>240</integer>
+			<integer>350</integer>
 		</dict>
 		<key>487D7A3C-11A7-416D-8F0F-21097B979E4C</key>
 		<dict>
 			<key>xpos</key>
-			<integer>540</integer>
+			<integer>530</integer>
 			<key>ypos</key>
 			<integer>270</integer>
 		</dict>
@@ -344,7 +348,7 @@ echo -n $query | say $1 -v Samantha</string>
 			<key>xpos</key>
 			<integer>740</integer>
 			<key>ypos</key>
-			<integer>390</integer>
+			<integer>170</integer>
 		</dict>
 		<key>8FE8475E-6310-49A4-967E-D6CCE73A86AC</key>
 		<dict>
@@ -358,14 +362,14 @@ echo -n $query | say $1 -v Samantha</string>
 			<key>xpos</key>
 			<integer>540</integer>
 			<key>ypos</key>
-			<integer>140</integer>
+			<integer>70</integer>
 		</dict>
 		<key>CAF59F43-6C28-47BF-B3DA-1A65C2198F2F</key>
 		<dict>
 			<key>xpos</key>
 			<integer>740</integer>
 			<key>ypos</key>
-			<integer>110</integer>
+			<integer>40</integer>
 		</dict>
 		<key>D7047D97-8226-43FB-8656-4CF365DB3FE3</key>
 		<dict>
