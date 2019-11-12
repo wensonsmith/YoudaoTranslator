@@ -19,7 +19,6 @@ use Alfred\Workflows\Workflow;
 
 class YoudaoTranslate
 {
-
     private $workflow;
     private $keys;
     private $result;
@@ -124,6 +123,7 @@ class YoudaoTranslate
      *function：检测字符串是否由纯英文，纯中文，中英文混合组成
      *param string
      *return 1:纯英文;2:纯中文;3:中英文混合
+     *return true: 有中文; false: 无中文
      */
     private function isChinese($str){
         $m=mb_strlen($str,'utf-8');
@@ -291,15 +291,28 @@ class YoudaoTranslate
     /**
      * 组装网易智云请求地址
      * @return String
+     * 
+     * https://ai.youdao.com/DOCSIRMA/html/自然语言翻译/API文档/文本翻译服务/文本翻译服务-API文档.html
      */
     private function getOpenQueryUrl($query)
     {
-        $api = 'https://openapi.youdao.com/api?from=auto&to=auto&';
+
+        $api = 'https://openapi.youdao.com/api?';
 
         $key = $this->keys[array_rand($this->keys)];
         $key['q'] = $query;
         $key['salt'] = strval(rand(1,100000));
         $key['sign'] = md5($key['appKey'] . $key['q'] . $key['salt'] . $key['secret']);
+
+        // 有道新版 api 只有当 from 和 to 的值都在{zh-CHS, en}范围内时，
+        // 才有单词字典翻译信息，当两个都是 auto 时则没有
+        if($this->isChinese($query)){
+            $key['from'] = 'auto';
+            $key['to'] = 'en';
+        } else {
+            $key['from'] = 'auto';
+            $key['to'] = 'zh-CHS';
+        }
 
         return $api.http_build_query($key);
     }
