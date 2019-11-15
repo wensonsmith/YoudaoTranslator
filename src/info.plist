@@ -421,9 +421,13 @@ echo $translator-&gt;translate($argv[1]);
 				<string>cd $TMPDIR
 query="$1"
 voice="youdao-${query}.mp3"
+
+echo say: "$voice" &gt;&amp;2
+
 if [[ ! -e ${voice} ]]; then
-	curl -o "$voice" "https://dict.youdao.com/dictvoice?audio=${query}&amp;type=1"
+  curl -SL#o "$voice" -# -d "audio=${query}" -d "type=1" "https://dict.youdao.com/dictvoice"
 fi
+
 afplay "$voice"</string>
 				<key>scriptargtype</key>
 				<integer>1</integer>
