@@ -507,9 +507,9 @@ afplay "$voice"</string>
 	<key>variables</key>
 	<dict>
 		<key>youdao_appkey</key>
-		<string>7ba4d4a34fa33db2</string>
+		<string></string>
 		<key>youdao_secret</key>
-		<string>ErUcqPaUvDMX606CmbRB0XlOTaEu4LpY</string>
+		<string></string>
 	</dict>
 	<key>variablesdontexport</key>
 	<array>
