@@ -332,6 +332,8 @@ class YoudaoTranslate
             $key['to'] = 'zh-CHS';
         }
 
+        unset($key['secret']);
+        
         return $api.http_build_query($key);
     }
 }
