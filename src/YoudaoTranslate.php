@@ -26,46 +26,51 @@ class YoudaoTranslate
     private $pronounce;
     private $historyFile;
 
+    /**
+     * @var boolean $queryChinese 减少多次调用 isChinese 方法
+     */
+    private $queryChinese;
+
     public function __construct($keys)
     {
         $this->workflow = new Workflow;
         $this->keys = $keys;
-        $this->historyFile = 'YoudaoTranslate-'. @date('Ym') .'.log';
+        $this->historyFile = 'YoudaoTranslate-'.@date('Ym').'.log';
     }
 
     /**
-     * @param 要翻译的值
-     * @return 翻译结果， json
+     * @param  string  $query  要翻译的值
+     * @return mixed 翻译结果
      */
     public function translate($query)
     {
         $this->query = $query;
+        $this->queryChinese = $this->isChinese($query);
+
         // 如果输入的是 yd * ，列出查询记录最近10条
-        if ($this->query === '*'){
+        if ($this->query === '*') {
             return $this->getHistory();
         }
 
         $url = $this->getOpenQueryUrl($query);
 
         $response = $this->workflow->request($url);
-        $this->result   = json_decode($response);
+        $this->result = json_decode($response);
 
-        if( empty($this->result) || (int)$this->result->errorCode !== 0){
-            //证明翻译出错
-            $this->addItem('翻译出错', $response, $response);
-        }else{
-            // 获取要发音的单词
-            $this->getPronounce();
-
-            if(isset($this->result->translation)){
+        if (empty($this->result) || (int) $this->result->errorCode !== 0) {
+            // 证明翻译出错
+            $error = $this->parseError($this->result->errorCode);
+            $this->addItem('翻译出错', $error);
+        } else {
+            if (isset($this->result->translation)) {
                 $this->parseTranslation($this->result->translation);
             }
 
-            if(isset($this->result->basic)){
+            if (isset($this->result->basic)) {
                 $this->parseBasic($this->result->basic);
             }
 
-            if(isset($this->result->web)){
+            if (isset($this->result->web)) {
                 $this->parseWeb($this->result->web);
             }
         }
@@ -75,26 +80,26 @@ class YoudaoTranslate
 
     /**
      * 解析 Translation 字段， 释义
-     * @param Translation Object
-     * @return array
+     * @param object $translation
      */
     private function parseTranslation($translation)
     {
-        $this->addItem($translation[0], null, $this->pronounce);
+        $this->pronounce = $this->queryChinese ? $translation[0] : $this->query;
+        $this->addItem($translation[0], $this->query);
     }
 
     /**
      * 解析 Basic 字段， 基础释义
-     * @param Basic Object
-     * @return array
+     * @param object $basic
      */
     private function parseBasic($basic)
     {
         foreach ($basic->explains as $explain) {
-            $this->addItem($explain, null);
+            $this->pronounce = $this->queryChinese ? $explain : $this->query;
+            $this->addItem($explain, $this->query);
         }
 
-        if(isset($basic->phonetic)){
+        if (isset($basic->phonetic)) {
             // 获取音标，同时确定要发音的单词
             $phonetic = $this->getPhonetic($basic);
             $this->addItem($phonetic, '回车可听发音', '~'.$this->pronounce);
@@ -103,35 +108,56 @@ class YoudaoTranslate
 
     /**
      * 解析 Web 字段， 网络释义
-     * @param Web Object
-     * @return array
+     * @param object $web
      */
     private function parseWeb($web)
     {
-        foreach ($web as $key => $item) {
-            $_title = join(',', $item->value);
-            if ($key === 0) {
-                $result = $this->addItem($_title, $item->key, $key, true);
+
+        foreach ($web as $index => $item) {
+            $this->pronounce = $this->queryChinese ? $item->value[0] : $item->key;
+            $title = join(', ', $item->value);
+
+            if ($index === 0) {
+                $result = $this->addItem($title, $item->key, $item->value[0], true);
                 $this->saveHistory($result);
             } else {
-                $this->addItem($_title, $item->key, $_title);
+                $this->addItem($title, $item->key, $item->value[0]);
             }
         }
     }
 
     /**
-     *function：检测字符串是否由纯英文，纯中文，中英文混合组成
-     *param string
-     *return 1:纯英文;2:纯中文;3:中英文混合
-     *return true: 有中文; false: 无中文
+     * 返回有道云部分错误
+     * @param  int  $code
+     * @return mixed
      */
-    private function isChinese($str){
-        $m=mb_strlen($str,'utf-8');
-        $s=strlen($str);
-        if($s==$m){
+    private function parseError($code)
+    {
+        $messages = [
+            101 => '缺少必填的参数',
+            102 => '不支持的语言类型',
+            103 => '翻译文本过长',
+            108 => '应用ID无效',
+            401 => '账户已经欠费',
+            411 => '访问频率受限'
+        ];
+
+        return $messages[$code];
+    }
+
+    /**
+     * 检测字符串是否由纯英文，纯中文，中英文混合组成
+     * @param string $str
+     * @return boolean
+     */
+    private function isChinese($str)
+    {
+        $m = mb_strlen($str, 'utf-8');
+        $s = strlen($str);
+        if ($s == $m) {
             return false;
         }
-        if($s%$m==0&&$s%3==0){
+        if ($s % $m == 0 && $s % 3 == 0) {
             return true;
         }
         return true;
@@ -139,38 +165,29 @@ class YoudaoTranslate
 
     /**
      * 从 basic 字段中获取音标
-     * @param Basic Object
-     * @return array
+     * @param object $basic
+     * @return mixed
      */
     public function getPhonetic($basic)
     {
         $phonetic = '';
         // 中文才会用到这个音标y
-        if ($this->isChinese($this->query) && isset($basic->{'phonetic'}))
-            $phonetic .= "[".$basic->{'phonetic'}."]";
-        if (isset($basic->{'us-phonetic'}))
-            $phonetic .= " [美: ".$basic->{'us-phonetic'}."]";
-        if (isset($basic->{'uk-phonetic'}))
+        if ($this->queryChinese && isset($basic->{'phonetic'})) {
+            $phonetic .= "[".$basic->{'phonetic'}."] ";
+        }
+        if (isset($basic->{'us-phonetic'})) {
+            $phonetic .= " [美: ".$basic->{'us-phonetic'}."] ";
+        }
+        if (isset($basic->{'uk-phonetic'})) {
             $phonetic .= " [英: ".$basic->{'uk-phonetic'}."]";
+        }
 
         return $phonetic;
     }
 
     /**
-     * 获取要发音的单词
+     * 获取查询记录的最近 9 条
      */
-    public function getPronounce()
-    {
-        if($this->isChinese($this->query)){
-            $this->pronounce = $this->result->translation[0];
-        }else{
-            $this->pronounce = $this->query;
-        }
-    }
-
-    /**
-    * 获取查询记录的最近 9 条
-    */
     private function getHistory()
     {
         $history = [];
@@ -182,7 +199,7 @@ class YoudaoTranslate
                     $history[] = $result;
                 }
             }
-            
+
             $output = [
                 'items' => $history
             ];
@@ -195,22 +212,21 @@ class YoudaoTranslate
     }
 
     /**
-    * 保存翻译结果
-    * @param translation
-    * @return array
-    */
+     * 保存翻译结果
+     * @param  array $translation
+     */
     private function saveHistory($translation)
     {
-        @file_put_contents($this->historyFile, json_encode($translation) . "\n", FILE_APPEND);
+        @file_put_contents($this->historyFile, json_encode($translation)."\n", FILE_APPEND);
     }
 
     /**
      * 取文件最后$n行
-     * @param string $file 文件路径
-     * @param int $line 最后几行
+     * @param  string  $filename  文件路径
+     * @param  int  $n  最后几行
      * @return mixed 成功则返回字符串
      */
-    private function getLastLines($filename,$n)
+    private function getLastLines($filename, $n)
     {
         if (!$handler = @fopen($filename, 'r')) {
             return false;
@@ -221,9 +237,9 @@ class YoudaoTranslate
         //忽略最后的 \n
         $position = -2;
 
-        while($n>0){
-            while($eof!="\n"){
-                if(!fseek($handler, $position, SEEK_END)){
+        while ($n > 0) {
+            while ($eof != "\n") {
+                if (!fseek($handler, $position, SEEK_END)) {
                     $eof = fgetc($handler);
                     $position--;
                 } else {
@@ -233,11 +249,11 @@ class YoudaoTranslate
 
             if ($line = fgets($handler)) {
                 $lines[] = $line;
-                $eof="";
+                $eof = "";
                 $n--;
             } else {
                 //当游标超限 fseek 报错以后，无法 fgets($fp), 需要将游标向后移动一位
-                fseek($handler, $position+1, SEEK_END);
+                fseek($handler, $position + 1, SEEK_END);
                 if ($line = fgets($handler)) {
                     $lines[] = $line;
                 }
@@ -249,28 +265,30 @@ class YoudaoTranslate
     }
 
     /**
-     * 随机从配置中获取一组 keyfrom 和 key
-     * @param $title 标题
-     * @param $subtitle 副标题
-     * @param $arg 传递值
+     * 添加一个选项
+     * @param  string  $title  标题
+     * @param  string  $subtitle  副标题
+     * @param  string  $arg  传递值
+     * @param  boolean  $returnValue  为了保存历史记录，需要返回数组
      * @return array
      */
-    private function addItem($title, $subtitle, $arg = null, $toArray = false)
+    private function addItem($title, $subtitle, $arg = null, $returnValue = false)
     {
-        $arg           = $arg ? $arg : $title;
-        $_subtitle     = $subtitle ? $subtitle : $this->query;
-        $_quicklookurl = 'http://youdao.com/w/'.urlencode($this->query);
-        $_icon         = $this->startsWith($arg, '~') ? 'translate-say.png' : 'translate.png';
+        $arg = $arg ? $arg : $title;
+        $quickLookUrl = 'http://youdao.com/w/'.urlencode($this->query);
+        $icon = $this->startsWith($arg, '~') ? 'translate-say.png' : 'translate.png';
 
         $result = $this->workflow->result()
-                    ->title($title)
-                    ->subtitle($_subtitle)
-                    ->quicklookurl($_quicklookurl)
-                    ->arg($arg)
-                    ->icon($_icon)
-                    ->text('copy', $title);
-        
-        if ($toArray) {
+            ->title($title)
+            ->subtitle($subtitle)
+            ->quicklookurl($quickLookUrl)
+            ->arg($arg)
+            ->mod('cmd', '🔊' . $this->pronounce, $this->pronounce)
+            ->mod('alt', '🔊' . $this->pronounce, $this->pronounce)
+            ->icon($icon)
+            ->text('copy', $title);
+
+        if ($returnValue) {
             return $result->toArray();
         }
     }
@@ -278,9 +296,9 @@ class YoudaoTranslate
 
     /**
      * 检测字符串开头
-     * @param haystack 等待检测的字符串
-     * @param needle   开头的定义
-     * @return Boolean
+     * @param string $haystack 等待检测的字符串
+     * @param string $needle   开头的定义
+     * @return boolean
      */
     private function startsWith($haystack, $needle)
     {
@@ -290,9 +308,9 @@ class YoudaoTranslate
 
     /**
      * 组装网易智云请求地址
-     * @return String
-     * 
-     * https://ai.youdao.com/DOCSIRMA/html/自然语言翻译/API文档/文本翻译服务/文本翻译服务-API文档.html
+     * @see https://ai.youdao.com/DOCSIRMA/html/自然语言翻译/API文档/文本翻译服务/文本翻译服务-API文档.html
+     * @param string $query
+     * @return string
      */
     private function getOpenQueryUrl($query)
     {
@@ -301,12 +319,12 @@ class YoudaoTranslate
 
         $key = $this->keys[array_rand($this->keys)];
         $key['q'] = $query;
-        $key['salt'] = strval(rand(1,100000));
-        $key['sign'] = md5($key['appKey'] . $key['q'] . $key['salt'] . $key['secret']);
+        $key['salt'] = strval(rand(1, 100000));
+        $key['sign'] = md5($key['appKey'].$key['q'].$key['salt'].$key['secret']);
 
         // 有道新版 api 只有当 from 和 to 的值都在{zh-CHS, en}范围内时，
         // 才有单词字典翻译信息，当两个都是 auto 时则没有
-        if($this->isChinese($query)){
+        if ($this->queryChinese) {
             $key['from'] = 'auto';
             $key['to'] = 'en';
         } else {

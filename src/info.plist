@@ -34,19 +34,6 @@
 				<false/>
 			</dict>
 		</array>
-		<key>6A149B78-1825-48B9-AC94-D83D8ADD9993</key>
-		<array>
-			<dict>
-				<key>destinationuid</key>
-				<string>284F6AAD-8FE7-44A6-AAE4-62A0F8BEE779</string>
-				<key>modifiers</key>
-				<integer>0</integer>
-				<key>modifiersubtext</key>
-				<string></string>
-				<key>vitoclose</key>
-				<false/>
-			</dict>
-		</array>
 		<key>8FE8475E-6310-49A4-967E-D6CCE73A86AC</key>
 		<array>
 			<dict>
@@ -75,17 +62,17 @@
 				<key>modifiers</key>
 				<integer>1048576</integer>
 				<key>modifiersubtext</key>
-				<string>🔊 {query}</string>
+				<string></string>
 				<key>vitoclose</key>
 				<true/>
 			</dict>
 			<dict>
 				<key>destinationuid</key>
-				<string>6A149B78-1825-48B9-AC94-D83D8ADD9993</string>
+				<string>284F6AAD-8FE7-44A6-AAE4-62A0F8BEE779</string>
 				<key>modifiers</key>
 				<integer>524288</integer>
 				<key>modifiersubtext</key>
-				<string>🔊 {query}</string>
+				<string></string>
 				<key>vitoclose</key>
 				<true/>
 			</dict>
@@ -104,19 +91,6 @@
 			</dict>
 		</array>
 		<key>A78568B3-C360-4A35-A46A-0D91172F86EF</key>
-		<array>
-			<dict>
-				<key>destinationuid</key>
-				<string>B77D07EE-D8A8-4AF9-BC2F-5D8AC99DB4EF</string>
-				<key>modifiers</key>
-				<integer>0</integer>
-				<key>modifiersubtext</key>
-				<string></string>
-				<key>vitoclose</key>
-				<false/>
-			</dict>
-		</array>
-		<key>B77D07EE-D8A8-4AF9-BC2F-5D8AC99DB4EF</key>
 		<array>
 			<dict>
 				<key>destinationuid</key>
@@ -182,23 +156,6 @@
 			<string>CAF59F43-6C28-47BF-B3DA-1A65C2198F2F</string>
 			<key>version</key>
 			<integer>2</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>matchmode</key>
-				<integer>1</integer>
-				<key>matchstring</key>
-				<string>^\[.*?\] *</string>
-				<key>replacestring</key>
-				<string></string>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.utility.replace</string>
-			<key>uid</key>
-			<string>B77D07EE-D8A8-4AF9-BC2F-5D8AC99DB4EF</string>
-			<key>version</key>
-			<integer>1</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -281,9 +238,9 @@
 			<key>config</key>
 			<dict>
 				<key>matchmode</key>
-				<integer>1</integer>
+				<integer>0</integer>
 				<key>matchstring</key>
-				<string>^~</string>
+				<string>~</string>
 				<key>replacestring</key>
 				<string></string>
 			</dict>
@@ -443,23 +400,6 @@ afplay "$voice"</string>
 			<key>version</key>
 			<integer>2</integer>
 		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>matchmode</key>
-				<integer>0</integer>
-				<key>matchstring</key>
-				<string>~</string>
-				<key>replacestring</key>
-				<string></string>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.utility.replace</string>
-			<key>uid</key>
-			<string>6A149B78-1825-48B9-AC94-D83D8ADD9993</string>
-			<key>version</key>
-			<integer>1</integer>
-		</dict>
 	</array>
 	<key>readme</key>
 	<string># 配置有道 KEYS
@@ -517,13 +457,6 @@ afplay "$voice"</string>
 			<key>ypos</key>
 			<integer>120</integer>
 		</dict>
-		<key>6A149B78-1825-48B9-AC94-D83D8ADD9993</key>
-		<dict>
-			<key>xpos</key>
-			<integer>660</integer>
-			<key>ypos</key>
-			<integer>370</integer>
-		</dict>
 		<key>6B0F6A32-751F-4071-A1E8-76A2E9486962</key>
 		<dict>
 			<key>colorindex</key>
@@ -556,13 +489,6 @@ afplay "$voice"</string>
 			<key>ypos</key>
 			<integer>40</integer>
 		</dict>
-		<key>B77D07EE-D8A8-4AF9-BC2F-5D8AC99DB4EF</key>
-		<dict>
-			<key>xpos</key>
-			<integer>780</integer>
-			<key>ypos</key>
-			<integer>40</integer>
-		</dict>
 		<key>CAF59F43-6C28-47BF-B3DA-1A65C2198F2F</key>
 		<dict>
 			<key>xpos</key>
@@ -581,9 +507,9 @@ afplay "$voice"</string>
 	<key>variables</key>
 	<dict>
 		<key>youdao_appkey</key>
-		<string></string>
+		<string>7ba4d4a34fa33db2</string>
 		<key>youdao_secret</key>
-		<string></string>
+		<string>ErUcqPaUvDMX606CmbRB0XlOTaEu4LpY</string>
 	</dict>
 	<key>variablesdontexport</key>
 	<array>
