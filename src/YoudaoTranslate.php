@@ -138,11 +138,14 @@ class YoudaoTranslate
             102 => '不支持的语言类型',
             103 => '翻译文本过长',
             108 => '应用ID无效',
+            110 => '无相关服务的有效实例',
+            111 => '开发者账号无效',
+            112 => '请求服务无效',
             401 => '账户已经欠费',
             411 => '访问频率受限'
         ];
 
-        return $messages[$code];
+        return isset($messages[$code]) ? $messages[$code] : '服务异常';
     }
 
     /**
