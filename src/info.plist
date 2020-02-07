@@ -4,13 +4,54 @@
 <dict>
 	<key>bundleid</key>
 	<string>Youdao.Translator</string>
+	<key>category</key>
+	<string>Tools</string>
 	<key>connections</key>
 	<dict>
+		<key>050E4DA2-31C5-4C14-8C31-B4B981642C26</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>1DBACCF8-3A88-48A2-AE9A-1EC3D292BEBD</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
 		<key>1631393E-5B53-4C8B-AF64-A04B687438DF</key>
 		<array>
 			<dict>
 				<key>destinationuid</key>
 				<string>6B0F6A32-751F-4071-A1E8-76A2E9486962</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>224556A8-701F-43C1-B08A-A973D9A7DB58</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>95191CE8-8C68-4D5D-9D12-A44919926786</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>23AD3305-8115-499F-9222-ACB802BFE1A3</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>224556A8-701F-43C1-B08A-A973D9A7DB58</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -75,6 +116,19 @@
 				<string></string>
 				<key>vitoclose</key>
 				<true/>
+			</dict>
+		</array>
+		<key>95191CE8-8C68-4D5D-9D12-A44919926786</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>050E4DA2-31C5-4C14-8C31-B4B981642C26</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
 			</dict>
 		</array>
 		<key>971BFFF5-E28E-41F4-B45A-A8216C2D230B</key>
@@ -196,11 +250,9 @@
 				<key>focusedappvariablename</key>
 				<string></string>
 				<key>hotkey</key>
-				<integer>49</integer>
+				<integer>0</integer>
 				<key>hotmod</key>
-				<integer>262144</integer>
-				<key>hotstring</key>
-				<string>Space</string>
+				<integer>0</integer>
 				<key>leftcursor</key>
 				<false/>
 				<key>modsmode</key>
@@ -400,6 +452,127 @@ afplay "$voice"</string>
 			<key>version</key>
 			<integer>2</integer>
 		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>alfredfiltersresults</key>
+				<true/>
+				<key>alfredfiltersresultsmatchmode</key>
+				<integer>0</integer>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
+				<key>argumenttype</key>
+				<integer>2</integer>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<true/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string>Fetching Github Release</string>
+				<key>script</key>
+				<string>&lt;?php
+
+require('Updater.php');
+
+$updater = new Updater(getenv('version'));
+
+echo $updater-&gt;fetchReleases();
+
+?&gt;</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>subtext</key>
+				<string></string>
+				<key>title</key>
+				<string>查询更新中···</string>
+				<key>type</key>
+				<integer>1</integer>
+				<key>withspace</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>224556A8-701F-43C1-B08A-A973D9A7DB58</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>browser</key>
+				<string>com.apple.Safari</string>
+				<key>spaces</key>
+				<string></string>
+				<key>url</key>
+				<string>{query}</string>
+				<key>utf8</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.openurl</string>
+			<key>uid</key>
+			<string>95191CE8-8C68-4D5D-9D12-A44919926786</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>openwith</key>
+				<string></string>
+				<key>sourcefile</key>
+				<string>~/Downloads/Youdao Translate.alfredworkflow</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.openfile</string>
+			<key>uid</key>
+			<string>1DBACCF8-3A88-48A2-AE9A-1EC3D292BEBD</string>
+			<key>version</key>
+			<integer>3</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>2</integer>
+				<key>keyword</key>
+				<string>update</string>
+				<key>subtext</key>
+				<string>Update YoudaoTranslate Workflow</string>
+				<key>text</key>
+				<string>更新有道翻译</string>
+				<key>withspace</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>23AD3305-8115-499F-9222-ACB802BFE1A3</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>seconds</key>
+				<string>5</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.delay</string>
+			<key>uid</key>
+			<string>050E4DA2-31C5-4C14-8C31-B4B981642C26</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
 	</array>
 	<key>readme</key>
 	<string># 配置有道 KEYS
@@ -425,12 +598,40 @@ afplay "$voice"</string>
 5. 把变量填入 workflow 右上角的 [X] 点开后的配置框中</string>
 	<key>uidata</key>
 	<dict>
+		<key>050E4DA2-31C5-4C14-8C31-B4B981642C26</key>
+		<dict>
+			<key>xpos</key>
+			<integer>780</integer>
+			<key>ypos</key>
+			<integer>540</integer>
+		</dict>
 		<key>1631393E-5B53-4C8B-AF64-A04B687438DF</key>
 		<dict>
 			<key>xpos</key>
 			<integer>780</integer>
 			<key>ypos</key>
 			<integer>120</integer>
+		</dict>
+		<key>1DBACCF8-3A88-48A2-AE9A-1EC3D292BEBD</key>
+		<dict>
+			<key>xpos</key>
+			<integer>900</integer>
+			<key>ypos</key>
+			<integer>510</integer>
+		</dict>
+		<key>224556A8-701F-43C1-B08A-A973D9A7DB58</key>
+		<dict>
+			<key>xpos</key>
+			<integer>330</integer>
+			<key>ypos</key>
+			<integer>510</integer>
+		</dict>
+		<key>23AD3305-8115-499F-9222-ACB802BFE1A3</key>
+		<dict>
+			<key>xpos</key>
+			<integer>130</integer>
+			<key>ypos</key>
+			<integer>510</integer>
 		</dict>
 		<key>284F6AAD-8FE7-44A6-AAE4-62A0F8BEE779</key>
 		<dict>
@@ -475,6 +676,13 @@ afplay "$voice"</string>
 			<key>ypos</key>
 			<integer>170</integer>
 		</dict>
+		<key>95191CE8-8C68-4D5D-9D12-A44919926786</key>
+		<dict>
+			<key>xpos</key>
+			<integer>550</integer>
+			<key>ypos</key>
+			<integer>510</integer>
+		</dict>
 		<key>971BFFF5-E28E-41F4-B45A-A8216C2D230B</key>
 		<dict>
 			<key>xpos</key>
@@ -506,6 +714,8 @@ afplay "$voice"</string>
 	</dict>
 	<key>variables</key>
 	<dict>
+		<key>version</key>
+		<string>v2.4.0</string>
 		<key>youdao_appkey</key>
 		<string></string>
 		<key>youdao_secret</key>
@@ -517,8 +727,8 @@ afplay "$voice"</string>
 		<string>youdao_secret</string>
 	</array>
 	<key>version</key>
-	<string></string>
+	<string>2.4.0</string>
 	<key>webaddress</key>
-	<string>https://seekbetter.me</string>
+	<string>https://iwenson.com</string>
 </dict>
 </plist>

@@ -4,7 +4,7 @@ namespace Alfred\Workflows;
 
 class Workflow
 {
-    protected $results = [];
+    public $results = [];
 
     /**
      * Add a result to the workflow
