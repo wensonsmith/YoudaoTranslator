@@ -278,7 +278,7 @@ class YoudaoTranslate
     private function addItem($title, $subtitle, $arg = null, $returnValue = false)
     {
         $arg = $arg ? $arg : $title;
-        $quickLookUrl = 'http://youdao.com/w/'.urlencode($this->query);
+        $quickLookUrl = 'http://youdao.com/w/' . rawurlencode($this->query);
         $icon = $this->startsWith($arg, '~') ? 'translate-say.png' : 'translate.png';
 
         $result = $this->workflow->result()
@@ -336,7 +336,7 @@ class YoudaoTranslate
         }
 
         unset($key['secret']);
-        
+
         return $api.http_build_query($key);
     }
 }
