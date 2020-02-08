@@ -20,17 +20,22 @@ YoudaoTranslate | 有道翻译
 
 ![screenshot_3](screenshot/screenshot_3.png)
 
-#### 4. 在选项上 `↩︎ Enter` 回车复制翻译结果
+#### 4. 生词本功能
+`Ctrl` + `↩︎ Enter` 加入生词本
 
-#### 5. 输入 `yd *` 查询最近的翻译记录
+![screenshot_3](screenshot/word-book.jpg)
+
+#### 5. 在选项上 `↩︎ Enter` 回车复制翻译结果
+
+#### 6. `yd *` 查询最近的翻译记录
 
 ![transalte_history](screenshot/translate_history.gif)
 
-#### 6. 翻译结果上按 `⇧ Shift` 直接预览有道网页
+#### 7. 翻译结果上按 `⇧ Shift` 直接预览有道网页
 
 ![screenshot_4](screenshot/screenshot_4.gif)
 
-#### 7. 输入 `update` 检查更新 Workflow
+#### 8. 输入 `update` 检查更新 Workflow
 
 ![updae](screenshot/update.png)
 
@@ -38,7 +43,7 @@ YoudaoTranslate | 有道翻译
 
 #### 1. 下载导入使用
 - [GitHub Releases 下载](https://github.com/wensonsmith/YoudaoTranslate/releases)
-- [又拍云下载 v2.4.0](https://img.seekbetter.me/workflows/Youdao%20Translate.zip)
+- [又拍云下载 v2.4.0](https://img.seekbetter.me/workflows/Youdao%20Translate.zip)， v2.4.0 版本以后可以使用 update 进行更新
 
    下载解压后双击 `Youdao Translate.alfredworkflow` 导入即可使用。
 
@@ -71,7 +76,9 @@ $ ln -s /path/to/YoudaoTranslate/src/ ~/Library/Application\ Support/Alfred\ 3/A
 
 ![var-config-step-1](screenshot/var-config-step-1.jpg)
 
-![var-config-step-2](screenshot/var-config-step-2.png)
+注意网易账户上面是密码，下面是账户
+
+![var-config-step-2](screenshot/config-step-2.jpg)
 
 
 ## 四、Contributors
