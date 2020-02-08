@@ -46,7 +46,13 @@ class YoudaoTranslate
      */
     public function translate($query)
     {
-        $this->query = $this->parseCamelPhrase($query);
+        /**
+         * @see https://www.php.net/manual/en/function.iconv.php#111909
+         * @see https://stackoverflow.com/questions/48537305/same-character-different-length-and-bytes
+         */
+        $query = iconv("UTF-8-MAC", "UTF-8", $query);
+
+        $this->query = $this->isCamelCase($query) ? $this->parseCamelPhrase($query) : $query;
 
         $this->queryChinese = $this->isChinese($query);
 
@@ -150,30 +156,35 @@ class YoudaoTranslate
             110 => '无相关服务的有效实例',
             111 => '开发者账号无效',
             112 => '请求服务无效',
+            113 => '查询为空',
             202 => '签名检验失败,检查 KEY 和 SCRET',
             401 => '账户已经欠费',
             411 => '访问频率受限'
         ];
 
-        return isset($messages[$code]) ? $messages[$code] : '服务异常';
+        return isset($messages[$code]) ? $messages[$code] : '翻译失败，错误码：' . $code;
     }
 
     /**
-     * 检测字符串是否由纯英文，纯中文，中英文混合组成
+     * 检查是否为中文
      * @param string $str
-     * @return boolean
+     * @return false|int
      */
     private function isChinese($str)
     {
-        $m = mb_strlen($str, 'utf-8');
-        $s = strlen($str);
-        if ($s == $m) {
-            return false;
-        }
-        if ($s % $m == 0 && $s % 3 == 0) {
-            return true;
-        }
-        return true;
+        $chinese = '/[\x{4e00}-\x{9fa5}]+/u';
+        return preg_match($chinese, $str);
+    }
+
+    /**
+     * 检查是不是 CamelCase
+     * @param string $str
+     * @return false|int
+     */
+    private function isCamelCase($str)
+    {
+        $regex = '/([A-Z]|[a-z])+((\d)|([A-Z0-9][a-z0-9]+))*([A-Z])[a-z]*/';
+        return preg_match($regex, $str);
     }
 
     /**
@@ -356,7 +367,7 @@ class YoudaoTranslate
         // 有道新版 api 只有当 from 和 to 的值都在{zh-CHS, en}范围内时，
         // 才有单词字典翻译信息，当两个都是 auto 时则没有
         if ($this->queryChinese) {
-            $key['from'] = 'auto';
+            $key['from'] = 'zh-CHS';
             $key['to'] = 'en';
         } else {
             $key['from'] = 'auto';

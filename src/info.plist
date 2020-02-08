@@ -319,9 +319,11 @@
 				<key>focusedappvariablename</key>
 				<string></string>
 				<key>hotkey</key>
-				<integer>0</integer>
+				<integer>49</integer>
 				<key>hotmod</key>
-				<integer>0</integer>
+				<integer>262144</integer>
+				<key>hotstring</key>
+				<string>Space</string>
 				<key>leftcursor</key>
 				<false/>
 				<key>modsmode</key>
@@ -603,7 +605,9 @@ if (empty($username) || empty($password)) {
 
 require('Updater.php');
 
-$updater = new Updater(getenv('version'));
+$version = 'v2.6.0';
+
+$updater = new Updater($version);
 
 echo $updater-&gt;fetchReleases();
 
@@ -841,8 +845,6 @@ echo $updater-&gt;fetchReleases();
 		<string></string>
 		<key>netease_username</key>
 		<string></string>
-		<key>version</key>
-		<string>v2.5.0</string>
 		<key>youdao_appkey</key>
 		<string></string>
 		<key>youdao_secret</key>
@@ -856,7 +858,7 @@ echo $updater-&gt;fetchReleases();
 		<string>youdao_secret</string>
 	</array>
 	<key>version</key>
-	<string>2.5.0</string>
+	<string>2.6.0</string>
 	<key>webaddress</key>
 	<string>https://iwenson.com</string>
 </dict>
