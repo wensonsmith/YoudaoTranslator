@@ -31,6 +31,8 @@ class YoudaoTranslate
      */
     private $queryChinese;
 
+    private $phonetic;
+
     public function __construct($keys)
     {
         $this->workflow = new Workflow;
@@ -62,6 +64,12 @@ class YoudaoTranslate
             $error = $this->parseError($this->result->errorCode);
             $this->addItem('翻译出错', $error);
         } else {
+
+            // 为了加入生词本有发音，优先解析发音
+            if (isset($this->result->basic)) {
+                $this->getPhonetic($this->result->basic);
+            }
+
             if (isset($this->result->translation)) {
                 $this->parseTranslation($this->result->translation);
             }
@@ -101,8 +109,8 @@ class YoudaoTranslate
 
         if (isset($basic->phonetic)) {
             // 获取音标，同时确定要发音的单词
-            $phonetic = $this->getPhonetic($basic);
-            $this->addItem($phonetic, '回车可听发音', '~'.$this->pronounce);
+
+            $this->addItem($this->phonetic, '回车可听发音', '~'.$this->pronounce);
         }
     }
 
@@ -184,6 +192,8 @@ class YoudaoTranslate
         if (isset($basic->{'uk-phonetic'})) {
             $phonetic .= " [英: ".$basic->{'uk-phonetic'}."]";
         }
+
+        $this->phonetic = $phonetic;
 
         return $phonetic;
     }
@@ -288,6 +298,7 @@ class YoudaoTranslate
             ->arg($arg)
             ->mod('cmd', '🔊' . $this->pronounce, $this->pronounce)
             ->mod('alt', '🔊' . $this->pronounce, $this->pronounce)
+            ->mod('ctrl', '📝 加入生词本', implode('|', [$this->pronounce, $this->phonetic, $title]))
             ->icon($icon)
             ->text('copy', $title);
 

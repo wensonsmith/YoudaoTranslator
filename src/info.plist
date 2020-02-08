@@ -75,6 +75,29 @@
 				<false/>
 			</dict>
 		</array>
+		<key>698ED0AA-6A32-4AA5-B9B4-94F88D53AE40</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>601091A8-890E-4BE9-A2D3-DDBFC35958DA</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>F28D41C6-10B6-447A-9DBB-CD9395F08D69</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
 		<key>8FE8475E-6310-49A4-967E-D6CCE73A86AC</key>
 		<array>
 			<dict>
@@ -116,6 +139,16 @@
 				<string></string>
 				<key>vitoclose</key>
 				<true/>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>698ED0AA-6A32-4AA5-B9B4-94F88D53AE40</string>
+				<key>modifiers</key>
+				<integer>262144</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
 			</dict>
 		</array>
 		<key>95191CE8-8C68-4D5D-9D12-A44919926786</key>
@@ -241,35 +274,6 @@
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>action</key>
-				<integer>0</integer>
-				<key>argument</key>
-				<integer>0</integer>
-				<key>focusedappvariable</key>
-				<false/>
-				<key>focusedappvariablename</key>
-				<string></string>
-				<key>hotkey</key>
-				<integer>0</integer>
-				<key>hotmod</key>
-				<integer>0</integer>
-				<key>leftcursor</key>
-				<false/>
-				<key>modsmode</key>
-				<integer>0</integer>
-				<key>relatedAppsMode</key>
-				<integer>0</integer>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.trigger.hotkey</string>
-			<key>uid</key>
-			<string>D7047D97-8226-43FB-8656-4CF365DB3FE3</string>
-			<key>version</key>
-			<integer>2</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
 				<key>inputstring</key>
 				<string>{query}</string>
 				<key>matchcasesensitive</key>
@@ -306,27 +310,29 @@
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>concurrently</key>
+				<key>action</key>
+				<integer>0</integer>
+				<key>argument</key>
+				<integer>0</integer>
+				<key>focusedappvariable</key>
 				<false/>
-				<key>escaping</key>
-				<integer>102</integer>
-				<key>script</key>
-				<string>query="$1"
-
-echo "$query"
-
-echo -n "$query" | say $1 -v Samantha</string>
-				<key>scriptargtype</key>
-				<integer>1</integer>
-				<key>scriptfile</key>
+				<key>focusedappvariablename</key>
 				<string></string>
-				<key>type</key>
+				<key>hotkey</key>
+				<integer>0</integer>
+				<key>hotmod</key>
+				<integer>0</integer>
+				<key>leftcursor</key>
+				<false/>
+				<key>modsmode</key>
+				<integer>0</integer>
+				<key>relatedAppsMode</key>
 				<integer>0</integer>
 			</dict>
 			<key>type</key>
-			<string>alfred.workflow.action.script</string>
+			<string>alfred.workflow.trigger.hotkey</string>
 			<key>uid</key>
-			<string>6B0F6A32-751F-4071-A1E8-76A2E9486962</string>
+			<string>D7047D97-8226-43FB-8656-4CF365DB3FE3</string>
 			<key>version</key>
 			<integer>2</integer>
 		</dict>
@@ -385,6 +391,33 @@ echo $translator-&gt;translate($argv[1]);
 			<string>alfred.workflow.input.scriptfilter</string>
 			<key>uid</key>
 			<string>8FE8475E-6310-49A4-967E-D6CCE73A86AC</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>query="$1"
+
+echo "$query"
+
+echo -n "$query" | say $1 -v Samantha</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>6B0F6A32-751F-4071-A1E8-76A2E9486962</string>
 			<key>version</key>
 			<integer>2</integer>
 		</dict>
@@ -451,6 +484,96 @@ afplay "$voice"</string>
 			<string>284F6AAD-8FE7-44A6-AAE4-62A0F8BEE779</string>
 			<key>version</key>
 			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>100</integer>
+				<key>script</key>
+				<string>require('WordBook.php');
+
+$query = "{query}";
+
+$username = getenv('netease_username');
+$password = getenv('netease_password');
+
+
+if (empty($username) || empty($password)) {
+	echo '请设置用户名和密码';
+} else {
+	$wordBook = new WordBook($username, $password);
+
+	list($word, $phonetic, $desc) = explode('|', $query);
+
+	echo $wordBook-&gt;add($word, $phonetic, $desc);
+
+}</string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>1</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>698ED0AA-6A32-4AA5-B9B4-94F88D53AE40</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>lastpathcomponent</key>
+				<false/>
+				<key>onlyshowifquerypopulated</key>
+				<false/>
+				<key>removeextension</key>
+				<false/>
+				<key>text</key>
+				<string></string>
+				<key>title</key>
+				<string>{query}</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.notification</string>
+			<key>uid</key>
+			<string>601091A8-890E-4BE9-A2D3-DDBFC35958DA</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.hidealfred</string>
+			<key>uid</key>
+			<string>F28D41C6-10B6-447A-9DBB-CD9395F08D69</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>2</integer>
+				<key>keyword</key>
+				<string>update</string>
+				<key>subtext</key>
+				<string>Update YoudaoTranslate Workflow</string>
+				<key>text</key>
+				<string>更新有道翻译</string>
+				<key>withspace</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>23AD3305-8115-499F-9222-ACB802BFE1A3</string>
+			<key>version</key>
+			<integer>1</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -542,27 +665,6 @@ echo $updater-&gt;fetchReleases();
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>argumenttype</key>
-				<integer>2</integer>
-				<key>keyword</key>
-				<string>update</string>
-				<key>subtext</key>
-				<string>Update YoudaoTranslate Workflow</string>
-				<key>text</key>
-				<string>更新有道翻译</string>
-				<key>withspace</key>
-				<false/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.input.keyword</string>
-			<key>uid</key>
-			<string>23AD3305-8115-499F-9222-ACB802BFE1A3</string>
-			<key>version</key>
-			<integer>1</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
 				<key>seconds</key>
 				<string>5</string>
 			</dict>
@@ -603,35 +705,35 @@ echo $updater-&gt;fetchReleases();
 			<key>xpos</key>
 			<integer>780</integer>
 			<key>ypos</key>
-			<integer>540</integer>
+			<integer>830</integer>
 		</dict>
 		<key>1631393E-5B53-4C8B-AF64-A04B687438DF</key>
 		<dict>
 			<key>xpos</key>
-			<integer>780</integer>
+			<integer>750</integer>
 			<key>ypos</key>
-			<integer>120</integer>
+			<integer>160</integer>
 		</dict>
 		<key>1DBACCF8-3A88-48A2-AE9A-1EC3D292BEBD</key>
 		<dict>
 			<key>xpos</key>
 			<integer>900</integer>
 			<key>ypos</key>
-			<integer>510</integer>
+			<integer>800</integer>
 		</dict>
 		<key>224556A8-701F-43C1-B08A-A973D9A7DB58</key>
 		<dict>
 			<key>xpos</key>
 			<integer>330</integer>
 			<key>ypos</key>
-			<integer>510</integer>
+			<integer>800</integer>
 		</dict>
 		<key>23AD3305-8115-499F-9222-ACB802BFE1A3</key>
 		<dict>
 			<key>xpos</key>
 			<integer>130</integer>
 			<key>ypos</key>
-			<integer>510</integer>
+			<integer>800</integer>
 		</dict>
 		<key>284F6AAD-8FE7-44A6-AAE4-62A0F8BEE779</key>
 		<dict>
@@ -642,21 +744,35 @@ echo $updater-&gt;fetchReleases();
 			<key>xpos</key>
 			<integer>900</integer>
 			<key>ypos</key>
-			<integer>340</integer>
+			<integer>400</integer>
 		</dict>
 		<key>34050778-5F09-4E68-A7AB-A3A4F7C58529</key>
 		<dict>
 			<key>xpos</key>
 			<integer>1050</integer>
 			<key>ypos</key>
-			<integer>40</integer>
+			<integer>70</integer>
 		</dict>
 		<key>487D7A3C-11A7-416D-8F0F-21097B979E4C</key>
 		<dict>
 			<key>xpos</key>
 			<integer>660</integer>
 			<key>ypos</key>
-			<integer>120</integer>
+			<integer>160</integer>
+		</dict>
+		<key>601091A8-890E-4BE9-A2D3-DDBFC35958DA</key>
+		<dict>
+			<key>xpos</key>
+			<integer>900</integer>
+			<key>ypos</key>
+			<integer>550</integer>
+		</dict>
+		<key>698ED0AA-6A32-4AA5-B9B4-94F88D53AE40</key>
+		<dict>
+			<key>xpos</key>
+			<integer>630</integer>
+			<key>ypos</key>
+			<integer>490</integer>
 		</dict>
 		<key>6B0F6A32-751F-4071-A1E8-76A2E9486962</key>
 		<dict>
@@ -667,55 +783,66 @@ echo $updater-&gt;fetchReleases();
 			<key>xpos</key>
 			<integer>900</integer>
 			<key>ypos</key>
-			<integer>170</integer>
+			<integer>250</integer>
 		</dict>
 		<key>8FE8475E-6310-49A4-967E-D6CCE73A86AC</key>
 		<dict>
 			<key>xpos</key>
 			<integer>330</integer>
 			<key>ypos</key>
-			<integer>170</integer>
+			<integer>240</integer>
 		</dict>
 		<key>95191CE8-8C68-4D5D-9D12-A44919926786</key>
 		<dict>
 			<key>xpos</key>
 			<integer>550</integer>
 			<key>ypos</key>
-			<integer>510</integer>
+			<integer>800</integer>
 		</dict>
 		<key>971BFFF5-E28E-41F4-B45A-A8216C2D230B</key>
 		<dict>
 			<key>xpos</key>
-			<integer>130</integer>
+			<integer>120</integer>
 			<key>ypos</key>
-			<integer>250</integer>
+			<integer>350</integer>
 		</dict>
 		<key>A78568B3-C360-4A35-A46A-0D91172F86EF</key>
 		<dict>
 			<key>xpos</key>
 			<integer>660</integer>
 			<key>ypos</key>
-			<integer>40</integer>
+			<integer>70</integer>
 		</dict>
 		<key>CAF59F43-6C28-47BF-B3DA-1A65C2198F2F</key>
 		<dict>
 			<key>xpos</key>
 			<integer>900</integer>
 			<key>ypos</key>
-			<integer>10</integer>
+			<integer>40</integer>
 		</dict>
 		<key>D7047D97-8226-43FB-8656-4CF365DB3FE3</key>
 		<dict>
 			<key>xpos</key>
-			<integer>130</integer>
+			<integer>120</integer>
 			<key>ypos</key>
-			<integer>90</integer>
+			<integer>160</integer>
+		</dict>
+		<key>F28D41C6-10B6-447A-9DBB-CD9395F08D69</key>
+		<dict>
+			<key>xpos</key>
+			<integer>900</integer>
+			<key>ypos</key>
+			<integer>690</integer>
 		</dict>
 	</dict>
 	<key>variables</key>
 	<dict>
+		<key>netease_password</key>
+		<string></string>
+		<key>netease_username</key>
+		<string></string>
 		<key>version</key>
-		<string>v2.4.0</string>
+		<string>v2.5.0</string>
 		<key>youdao_appkey</key>
 		<string></string>
 		<key>youdao_secret</key>
@@ -723,11 +850,13 @@ echo $updater-&gt;fetchReleases();
 	</dict>
 	<key>variablesdontexport</key>
 	<array>
+		<string>netease_username</string>
+		<string>netease_password</string>
 		<string>youdao_appkey</string>
 		<string>youdao_secret</string>
 	</array>
 	<key>version</key>
-	<string>2.4.0</string>
+	<string>2.5.0</string>
 	<key>webaddress</key>
 	<string>https://iwenson.com</string>
 </dict>
