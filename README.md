@@ -8,34 +8,41 @@ YoudaoTranslate | 有道翻译
 
 #### 1. 中英文自动互翻
 
-#### 2. 快捷键支持
+支持 `CamelCase` 驼峰短语翻译
+
+#### 2. 多语言支持
+可以识别中文、英文、日文、韩文、法文、西班牙文、葡萄牙文、俄文、越南文、德文、阿拉伯文、印尼文、意大利文，其他语种无法识别
+
+![多语言](screenshot/multi.jpg)
+
+#### 3. 快捷键支持
 - 双击 `⌥ Alt`  可以翻译选中内容 (在 Hotkey 中设置)
 
 - `⇧ Shift` + `Space` 可以直接唤出翻译输入框(在 Hotkey 中设置)
 
-#### 3. 英文发音
+#### 4. 英文发音
 -  `⌘ Command` + `↩︎ Enter` 本地发音（系统 `Say` 命令）
 - `⌥ Alt` + `↩︎ Enter`  调用有道在线语音发音
 - 在音标上回车发音并关闭窗口
 
 ![screenshot_3](screenshot/screenshot_3.png)
 
-#### 4. 生词本功能
+#### 5. 生词本功能
 `Ctrl` + `↩︎ Enter` 加入生词本
 
 ![screenshot_3](screenshot/word-book.jpg)
 
-#### 5. 在选项上 `↩︎ Enter` 回车复制翻译结果
+#### 6. 在选项上 `↩︎ Enter` 回车复制翻译结果
 
-#### 6. `yd *` 查询最近的翻译记录
+#### 7. `yd *` 查询最近的翻译记录
 
 ![transalte_history](screenshot/translate_history.gif)
 
-#### 7. 翻译结果上按 `⇧ Shift` 直接预览有道网页
+#### 8. 翻译结果上按 `⇧ Shift` 直接预览有道网页
 
 ![screenshot_4](screenshot/screenshot_4.gif)
 
-#### 8. 输入 `update` 检查更新 Workflow
+#### 9. 输入 `update` 检查更新 Workflow
 
 ![updae](screenshot/update.png)
 
@@ -43,7 +50,7 @@ YoudaoTranslate | 有道翻译
 
 #### 1. 下载导入使用
 - [GitHub Releases 下载](https://github.com/wensonsmith/YoudaoTranslate/releases)
-- [又拍云下载 v2.4.0](https://img.seekbetter.me/workflows/Youdao%20Translate.zip)， v2.4.0 版本以后可以使用 update 进行更新
+- [又拍云下载 v2.6.0](https://img.seekbetter.me/workflows/Youdao%20Translate-260.zip)， v2.6.0 版本以后可以使用 update 进行更新
 
    下载解压后双击 `Youdao Translate.alfredworkflow` 导入即可使用。
 
@@ -76,7 +83,7 @@ $ ln -s /path/to/YoudaoTranslate/src/ ~/Library/Application\ Support/Alfred\ 3/A
 
 ![var-config-step-1](screenshot/var-config-step-1.jpg)
 
-注意网易账户上面是密码，下面是账户
+6. 如果要使用生词本功能，请填写网易账户。注意网易账户上面是密码，下面是账户
 
 ![var-config-step-2](screenshot/config-step-2.jpg)
 
