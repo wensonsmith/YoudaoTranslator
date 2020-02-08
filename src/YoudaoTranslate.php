@@ -46,7 +46,8 @@ class YoudaoTranslate
      */
     public function translate($query)
     {
-        $this->query = $query;
+        $this->query = $this->parseCamelPhrase($query);
+
         $this->queryChinese = $this->isChinese($query);
 
         // 如果输入的是 yd * ，列出查询记录最近10条
@@ -54,7 +55,7 @@ class YoudaoTranslate
             return $this->getHistory();
         }
 
-        $url = $this->getOpenQueryUrl($query);
+        $url = $this->getOpenQueryUrl($this->query);
 
         $response = $this->workflow->request($url);
         $this->result = json_decode($response);
@@ -149,6 +150,7 @@ class YoudaoTranslate
             110 => '无相关服务的有效实例',
             111 => '开发者账号无效',
             112 => '请求服务无效',
+            202 => '签名检验失败,检查 KEY 和 SCRET',
             401 => '账户已经欠费',
             411 => '访问频率受限'
         ];
@@ -172,6 +174,21 @@ class YoudaoTranslate
             return true;
         }
         return true;
+    }
+
+    /**
+     * 解析camel 短语
+     * @param string $input
+     * @return string
+     */
+    private function parseCamelPhrase($input)
+    {
+        preg_match_all('!([A-Z][A-Z0-9]*(?=$|[A-Z][a-z0-9])|[A-Za-z][a-z0-9]+)!', $input, $matches);
+        $ret = $matches[0];
+        foreach ($ret as &$match) {
+            $match = $match == strtoupper($match) ? strtolower($match) : lcfirst($match);
+        }
+        return implode(' ', $ret);
     }
 
     /**
