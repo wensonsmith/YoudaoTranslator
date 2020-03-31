@@ -242,7 +242,7 @@
 			<key>uid</key>
 			<string>CAF59F43-6C28-47BF-B3DA-1A65C2198F2F</string>
 			<key>version</key>
-			<integer>2</integer>
+			<integer>3</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -305,7 +305,7 @@
 			<key>uid</key>
 			<string>1631393E-5B53-4C8B-AF64-A04B687438DF</string>
 			<key>version</key>
-			<integer>1</integer>
+			<integer>2</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -321,7 +321,7 @@
 				<key>hotkey</key>
 				<integer>49</integer>
 				<key>hotmod</key>
-				<integer>262144</integer>
+				<integer>524288</integer>
 				<key>hotstring</key>
 				<string>Space</string>
 				<key>leftcursor</key>
@@ -345,6 +345,8 @@
 				<false/>
 				<key>alfredfiltersresultsmatchmode</key>
 				<integer>0</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<false/>
 				<key>argumenttrimmode</key>
 				<integer>0</integer>
 				<key>argumenttype</key>
@@ -394,7 +396,7 @@ echo $translator-&gt;translate($argv[1]);
 			<key>uid</key>
 			<string>8FE8475E-6310-49A4-967E-D6CCE73A86AC</string>
 			<key>version</key>
-			<integer>2</integer>
+			<integer>3</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -584,6 +586,8 @@ if (empty($username) || empty($password)) {
 				<true/>
 				<key>alfredfiltersresultsmatchmode</key>
 				<integer>0</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<false/>
 				<key>argumenttrimmode</key>
 				<integer>0</integer>
 				<key>argumenttype</key>
@@ -630,7 +634,7 @@ echo $updater-&gt;fetchReleases();
 			<key>uid</key>
 			<string>224556A8-701F-43C1-B08A-A973D9A7DB58</string>
 			<key>version</key>
-			<integer>2</integer>
+			<integer>3</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -848,7 +852,7 @@ echo $updater-&gt;fetchReleases();
 		<key>youdao_appkey</key>
 		<string></string>
 		<key>youdao_secret</key>
-		<string></string>
+		<string></string>>
 	</dict>
 	<key>variablesdontexport</key>
 	<array>

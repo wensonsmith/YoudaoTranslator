@@ -2,3 +2,5 @@
 *.log
 .idea
 cookie
+Test.php
+src/info-bak.plist
