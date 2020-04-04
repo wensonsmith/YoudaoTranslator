@@ -3,4 +3,5 @@
 .idea
 cookie
 Test.php
-src/info-bak.plist
+src/info copy.plist
+.DS_Store

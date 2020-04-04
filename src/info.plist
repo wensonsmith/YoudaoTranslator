@@ -142,7 +142,7 @@
 			</dict>
 			<dict>
 				<key>destinationuid</key>
-				<string>698ED0AA-6A32-4AA5-B9B4-94F88D53AE40</string>
+				<string>F1565205-CE7B-4880-A3D5-5FAA0609C9C5</string>
 				<key>modifiers</key>
 				<integer>262144</integer>
 				<key>modifiersubtext</key>
@@ -208,6 +208,19 @@
 			<dict>
 				<key>destinationuid</key>
 				<string>8FE8475E-6310-49A4-967E-D6CCE73A86AC</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>F1565205-CE7B-4880-A3D5-5FAA0609C9C5</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>698ED0AA-6A32-4AA5-B9B4-94F88D53AE40</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -492,6 +505,71 @@ afplay "$voice"</string>
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>alfredfiltersresults</key>
+				<false/>
+				<key>alfredfiltersresultsmatchmode</key>
+				<integer>0</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<true/>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
+				<key>argumenttype</key>
+				<integer>0</integer>
+				<key>escaping</key>
+				<integer>100</integer>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<true/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string>同步分组中...</string>
+				<key>script</key>
+				<string>&lt;?php
+
+require('WordBook.php');
+
+$query = $argv[1];
+
+$username = getenv('netease_username');
+$password = getenv('netease_password');
+
+
+if (empty($username) || empty($password)) {
+	echo '请设置用户名和密码';
+} else {
+	$wordBook = new WordBook($username, $password);
+
+	echo $wordBook-&gt;books($query);
+}
+
+?&gt;</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>subtext</key>
+				<string></string>
+				<key>title</key>
+				<string>请选择分组</string>
+				<key>type</key>
+				<integer>1</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>F1565205-CE7B-4880-A3D5-5FAA0609C9C5</string>
+			<key>version</key>
+			<integer>3</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
 				<key>concurrently</key>
 				<false/>
 				<key>escaping</key>
@@ -510,9 +588,7 @@ if (empty($username) || empty($password)) {
 } else {
 	$wordBook = new WordBook($username, $password);
 
-	list($word, $phonetic, $desc) = explode('|', $query);
-
-	echo $wordBook-&gt;add($word, $phonetic, $desc);
+	echo $wordBook-&gt;add($query);
 
 }</string>
 				<key>scriptargtype</key>
@@ -778,9 +854,9 @@ echo $updater-&gt;fetchReleases();
 		<key>698ED0AA-6A32-4AA5-B9B4-94F88D53AE40</key>
 		<dict>
 			<key>xpos</key>
-			<integer>630</integer>
+			<integer>680</integer>
 			<key>ypos</key>
-			<integer>490</integer>
+			<integer>500</integer>
 		</dict>
 		<key>6B0F6A32-751F-4071-A1E8-76A2E9486962</key>
 		<dict>
@@ -835,6 +911,13 @@ echo $updater-&gt;fetchReleases();
 			<key>ypos</key>
 			<integer>160</integer>
 		</dict>
+		<key>F1565205-CE7B-4880-A3D5-5FAA0609C9C5</key>
+		<dict>
+			<key>xpos</key>
+			<integer>460</integer>
+			<key>ypos</key>
+			<integer>440</integer>
+		</dict>
 		<key>F28D41C6-10B6-447A-9DBB-CD9395F08D69</key>
 		<dict>
 			<key>xpos</key>
@@ -852,7 +935,7 @@ echo $updater-&gt;fetchReleases();
 		<key>youdao_appkey</key>
 		<string></string>
 		<key>youdao_secret</key>
-		<string></string>>
+		<string></string>
 	</dict>
 	<key>variablesdontexport</key>
 	<array>

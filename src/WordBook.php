@@ -1,4 +1,6 @@
 <?php
+require 'vendor/autoload.php';
+use Alfred\Workflows\Workflow;
 
 /**
  * 生词本功能
@@ -14,13 +16,19 @@ class WordBook
     /**
      * 生词本添加地址
      */
-    const ADD_WORD_URL = 'http://dict.youdao.com/wordbook/ajax?action=addword&le=eng&q=';
+    const ADD_WORD_URL = 'http://dict.youdao.com/wordbook/ajax?action=addword&le=eng&';
+
+    /**
+     * 生词本分组
+     */
+    const BOOKS_URL = 'http://dict.youdao.com/wordbook/webapi/books';
 
     /**
      * Cookie 文件
      */
     const COOKIE_FILE = './cookie';
 
+    private $workflow;
     /**
      * @var
      */
@@ -37,6 +45,7 @@ class WordBook
      */
     public function __construct($username, $password)
     {
+        $this->workflow = new Workflow;
         $this->username = $username;
         $this->password = $password;
 
@@ -52,13 +61,17 @@ class WordBook
      * @param string $phonetic 发音
      * @param string $desc 释义
      */
-    public function add($word, $phonetic, $desc)
+    public function add($query)
     {
-        if ($this->pushWord($word, $phonetic, $desc)) {
+        $data = json_decode($query);
+        $word = $data->word;
+        $tags = $data->tags;
+
+        if ($this->pushWord($word, $tags)) {
             echo $word . ' 已加入生词本';
         } else {
             if ($this->login()) {
-                if ($this->pushWord($word, $phonetic, $desc)) {
+                if ($this->pushWord($word, $tags)) {
                     echo $word . ' 已加入生词本';
                 } else {
                     echo '添加到生词本失败';
@@ -69,6 +82,39 @@ class WordBook
         }
     }
 
+    /**
+     * 获取单词本分组
+     */
+    public function books($query) {
+        $books = $this->getBooks();
+        if ($books == null) {
+            if ($this->login()) {
+                $books = $this->getBooks();
+                if ($books == null) {
+                    echo '获取单词列表失败';
+                    return;
+                }
+            } else {
+                echo '登录失败，请检查用户名和密码';
+                return;
+            }
+        }
+        list($word) = explode('|', $query);
+        foreach ($books as $k => $v):
+            $data = [
+                'word' => $word,
+                'tags' => $v->bookName,
+                'bookId' => $v->bookId
+            ];
+            // 添加Alfred选项
+            $this->workflow->result()
+                ->title($v->bookName)
+                ->subtitle($v->isDefault ? '默认' : '')
+                ->arg(json_encode($data));
+        endforeach;
+
+        return $this->workflow->output();
+    }
 
     /**
      * 登录
@@ -98,18 +144,39 @@ class WordBook
     }
 
     /**
+     * 获取单词本分组
+     * @return array
+     */
+    public function getBooks() {
+        $header = $this->buildHeader();
+
+        $response = $this->request(self::BOOKS_URL, [
+            CURLOPT_HTTPHEADER => $header,
+            CURLOPT_HEADER => false,
+            CURLINFO_HEADER_OUT => false
+        ]);
+
+        $result = json_decode($response);
+
+        if ($result == null) {
+            return null;
+        }
+        
+        $books = $result -> data;
+        return $books;
+    }
+
+    /**
      * @param $word
      * @param $phonetic
      * @param $desc
      * @return bool
      */
-    private function pushWord($word, $phonetic, $desc)
+    private function pushWord($word, $tags)
     {
-
-        $query = $word;
-        $tags = 'Alfred';
-
-        $word = compact('word', 'phonetic', 'desc', 'tags');
+        // $params = array('q'=>$word, 'phonetic'=>$phonetic, 'trans'=>$desc, 'tags'=>$tags);
+        $params = array('q'=>$word, 'tags'=>$tags);
+        $query = http_build_query($params);
 
         $header = $this->buildHeader();
         $header[] = 'Referer:http://dict.youdao.com/wordbook/wordlist';
@@ -121,7 +188,6 @@ class WordBook
         $result = explode("\r\n\r\n", $response, 2);
 
         return $result[1] == '{"message":"adddone"}';
-
     }
 
     /**
