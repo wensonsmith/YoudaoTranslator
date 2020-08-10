@@ -1,4 +1,6 @@
 <?php
+require 'vendor/autoload.php';
+use Alfred\Workflows\Workflow;
 
 /**
  * 生词本功能
@@ -14,17 +16,19 @@ class WordBook
     /**
      * 生词本添加地址
      */
-    const ADD_WORD_URL = 'http://dict.youdao.com/wordbook/wordlist?action=add';
+    const ADD_WORD_URL = 'http://dict.youdao.com/wordbook/ajax?action=addword&le=eng&';
+
+    /**
+     * 生词本分组
+     */
+    const BOOKS_URL = 'http://dict.youdao.com/wordbook/webapi/books';
 
     /**
      * Cookie 文件
      */
-    const COOKIE_FILE = 'cookie';
+    const COOKIE_FILE = './cookie';
 
-    /**
-     * @var
-     */
-    private $cookie;
+    private $workflow;
     /**
      * @var
      */
@@ -41,10 +45,15 @@ class WordBook
      */
     public function __construct($username, $password)
     {
+        $this->workflow = new Workflow;
         $this->username = $username;
         $this->password = $password;
 
-        $this->loadCookie();
+        // 如果cookie文件不存在，先新建一个新文件
+        // 否则curl无法保存cookie
+        if (!file_exists(self::COOKIE_FILE)) {
+            file_put_contents(self::COOKIE_FILE, '');
+        }
     }
 
     /**
@@ -52,13 +61,17 @@ class WordBook
      * @param string $phonetic 发音
      * @param string $desc 释义
      */
-    public function add($word, $phonetic, $desc)
+    public function add($query)
     {
-        if ($this->pushWord($word, $phonetic, $desc)) {
+        $data = json_decode($query);
+        $word = $data->word;
+        $tags = $data->tags;
+
+        if ($this->pushWord($word, $tags)) {
             echo $word . ' 已加入生词本';
         } else {
             if ($this->login()) {
-                if ($this->pushWord($word, $phonetic, $desc)) {
+                if ($this->pushWord($word, $tags)) {
                     echo $word . ' 已加入生词本';
                 } else {
                     echo '添加到生词本失败';
@@ -69,6 +82,39 @@ class WordBook
         }
     }
 
+    /**
+     * 获取单词本分组
+     */
+    public function books($query) {
+        $books = $this->getBooks();
+        if ($books == null) {
+            if ($this->login()) {
+                $books = $this->getBooks();
+                if ($books == null) {
+                    echo '获取单词列表失败';
+                    return;
+                }
+            } else {
+                echo '登录失败，请检查用户名和密码';
+                return;
+            }
+        }
+        list($word) = explode('|', $query);
+        foreach ($books as $k => $v):
+            $data = [
+                'word' => $word,
+                'tags' => $v->bookName,
+                'bookId' => $v->bookId
+            ];
+            // 添加Alfred选项
+            $this->workflow->result()
+                ->title($v->bookName)
+                ->subtitle($v->isDefault ? '默认' : '')
+                ->arg(json_encode($data));
+        endforeach;
+
+        return $this->workflow->output();
+    }
 
     /**
      * 登录
@@ -77,11 +123,12 @@ class WordBook
     private function login()
     {
         $response = $this->request(self::LOGIN_URL, [
+            CURLOPT_POST => true,
             CURLOPT_HTTPHEADER => $this->buildHeader(),
-            CURLOPT_POSTFIELDS => http_build_query($this->buildForm()),
+            CURLOPT_POSTFIELDS => http_build_query($this->buildForm())
         ]);
 
-        list($header, $body) = explode("\r\n\r\n", $response, 2);
+        list($header) = explode("\r\n\r\n", $response, 1);
 
         $matches = [];
 
@@ -89,14 +136,34 @@ class WordBook
 
         $cookie = $matches['cookie'];
 
-        if (count($cookie) === 1) {
+        if (count($cookie) === 0) {
             return false;
         }
 
-        $this->cookie = trim(implode(",", $cookie));
-        $this->saveCookie();
-
         return true;
+    }
+
+    /**
+     * 获取单词本分组
+     * @return array
+     */
+    public function getBooks() {
+        $header = $this->buildHeader();
+
+        $response = $this->request(self::BOOKS_URL, [
+            CURLOPT_HTTPHEADER => $header,
+            CURLOPT_HEADER => false,
+            CURLINFO_HEADER_OUT => false
+        ]);
+
+        $result = json_decode($response);
+
+        if ($result == null) {
+            return null;
+        }
+        
+        $books = $result -> data;
+        return $books;
     }
 
     /**
@@ -105,47 +172,22 @@ class WordBook
      * @param $desc
      * @return bool
      */
-    private function pushWord($word, $phonetic, $desc)
+    private function pushWord($word, $tags)
     {
-
-        $tags = 'Alfred';
-
-        $word = compact('word', 'phonetic', 'desc', 'tags');
+        // $params = array('q'=>$word, 'phonetic'=>$phonetic, 'trans'=>$desc, 'tags'=>$tags);
+        $params = array('q'=>$word, 'tags'=>$tags);
+        $query = http_build_query($params);
 
         $header = $this->buildHeader();
         $header[] = 'Referer:http://dict.youdao.com/wordbook/wordlist';
 
-        $response = $this->request(self::ADD_WORD_URL, [
-            CURLOPT_HTTPHEADER => $header,
-            CURLOPT_POSTFIELDS => http_build_query($word),
-            CURLOPT_COOKIE => $this->cookie,
+        $response = $this->request(self::ADD_WORD_URL . $query, [
+            CURLOPT_HTTPHEADER => $header
         ]);
 
-        list($header, $body) = explode("\r\n\r\n", $response, 2);
+        $result = explode("\r\n\r\n", $response, 2);
 
-        $matches = [];
-        preg_match('/Location\:.*/', $header, $matches);
-
-        return trim($matches[0]) === 'Location: http://dict.youdao.com/wordbook/wordlist';
-
-    }
-
-    /**
-     * 加载 cookie
-     */
-    private function loadCookie()
-    {
-        if (file_exists(self::COOKIE_FILE)) {
-            $this->cookie = file_get_contents(self::COOKIE_FILE);
-        }
-    }
-
-    /**
-     * 保存cookie
-     */
-    private function saveCookie()
-    {
-        file_put_contents(self::COOKIE_FILE, $this->cookie);
+        return $result[1] == '{"message":"adddone"}';
     }
 
     /**
@@ -177,7 +219,7 @@ class WordBook
             'ru' => 'http://dict.youdao.com/wordbook/wordlist?keyfrom=null',
             'product' => 'DICT',
             'type' => 1,
-            'um' => true,
+            'um' => 'true',
             'username' => $this->username,
             'password' => md5($this->password),
             'agreePrRule' => 1,
@@ -206,9 +248,11 @@ class WordBook
             CURLOPT_FRESH_CONNECT => true,
             CURLOPT_HEADER => true,
             CURLINFO_HEADER_OUT => true,
-            CURLOPT_POST => true,
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_SSL_VERIFYPEER => false,
+            CURLOPT_COOKIEJAR => realpath(self::COOKIE_FILE), // 保存返回的Cookie
+            CURLOPT_COOKIEFILE => realpath(self::COOKIE_FILE), // 读取现有Cookie, 不需要自己维护cookie变量
+            CURLOPT_TIMEOUT => 30                          // 增加超时
         );
 
         if ($options):
