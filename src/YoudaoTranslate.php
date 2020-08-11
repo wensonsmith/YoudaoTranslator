@@ -326,7 +326,7 @@ class YoudaoTranslate
             ->arg($arg)
             ->mod('cmd', '🔊' . $this->pronounce, $this->pronounce)
             ->mod('alt', '🔊' . $this->pronounce, $this->pronounce)
-            ->mod('ctrl', '📝 加入生词本', implode('|', [$subtitle, '请选择分组']))
+            ->mod('ctrl', '📝 加入生词本', $this->query)
             ->icon($icon)
             ->text('copy', $title);
 

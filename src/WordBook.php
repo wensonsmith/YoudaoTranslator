@@ -19,11 +19,6 @@ class WordBook
     const ADD_WORD_URL = 'http://dict.youdao.com/wordbook/ajax?action=addword&le=eng&';
 
     /**
-     * 生词本分组
-     */
-    const BOOKS_URL = 'http://dict.youdao.com/wordbook/webapi/books';
-
-    /**
      * Cookie 文件
      */
     const COOKIE_FILE = './cookie';
@@ -58,20 +53,14 @@ class WordBook
 
     /**
      * @param string $word 单词
-     * @param string $phonetic 发音
-     * @param string $desc 释义
      */
-    public function add($query)
+    public function add($word)
     {
-        $data = json_decode($query);
-        $word = $data->word;
-        $tags = $data->tags;
-
-        if ($this->pushWord($word, $tags)) {
+        if ($this->pushWord($word)) {
             echo $word . ' 已加入生词本';
         } else {
             if ($this->login()) {
-                if ($this->pushWord($word, $tags)) {
+                if ($this->pushWord($word)) {
                     echo $word . ' 已加入生词本';
                 } else {
                     echo '添加到生词本失败';
@@ -80,40 +69,6 @@ class WordBook
                 echo '登录失败，请检查用户名和密码';
             }
         }
-    }
-
-    /**
-     * 获取单词本分组
-     */
-    public function books($query) {
-        $books = $this->getBooks();
-        if ($books == null) {
-            if ($this->login()) {
-                $books = $this->getBooks();
-                if ($books == null) {
-                    echo '获取单词列表失败';
-                    return;
-                }
-            } else {
-                echo '登录失败，请检查用户名和密码';
-                return;
-            }
-        }
-        list($word) = explode('|', $query);
-        foreach ($books as $k => $v):
-            $data = [
-                'word' => $word,
-                'tags' => $v->bookName,
-                'bookId' => $v->bookId
-            ];
-            // 添加Alfred选项
-            $this->workflow->result()
-                ->title($v->bookName)
-                ->subtitle($v->isDefault ? '默认' : '')
-                ->arg(json_encode($data));
-        endforeach;
-
-        return $this->workflow->output();
     }
 
     /**
@@ -136,7 +91,7 @@ class WordBook
 
         $cookie = $matches['cookie'];
 
-        if (count($cookie) === 0) {
+        if (count($cookie) < 3) {
             return false;
         }
 
@@ -144,49 +99,21 @@ class WordBook
     }
 
     /**
-     * 获取单词本分组
-     * @return array
-     */
-    public function getBooks() {
-        $header = $this->buildHeader();
-
-        $response = $this->request(self::BOOKS_URL, [
-            CURLOPT_HTTPHEADER => $header,
-            CURLOPT_HEADER => false,
-            CURLINFO_HEADER_OUT => false
-        ]);
-
-        $result = json_decode($response);
-
-        if ($result == null) {
-            return null;
-        }
-        
-        $books = $result -> data;
-        return $books;
-    }
-
-    /**
      * @param $word
-     * @param $phonetic
-     * @param $desc
      * @return bool
      */
-    private function pushWord($word, $tags)
+    private function pushWord($word)
     {
-        // $params = array('q'=>$word, 'phonetic'=>$phonetic, 'trans'=>$desc, 'tags'=>$tags);
-        $params = array('q'=>$word, 'tags'=>$tags);
-        $query = http_build_query($params);
+        $params = [ 'q' => $word, 'tags'=> 'Alfred' ];
+        $url = self::ADD_WORD_URL . http_build_query($params);
 
         $header = $this->buildHeader();
-        $header[] = 'Referer:http://dict.youdao.com/wordbook/wordlist';
-
-        $response = $this->request(self::ADD_WORD_URL . $query, [
-            CURLOPT_HTTPHEADER => $header
+        $response = $this->request( $url, [
+            CURLOPT_HTTPHEADER => $header,
         ]);
 
         $result = explode("\r\n\r\n", $response, 2);
-
+        
         return $result[1] == '{"message":"adddone"}';
     }
 
@@ -214,9 +141,9 @@ class WordBook
         return [
             'app' => 'web',
             'tp' => 'urstoken',
-            'cf' => 3,
+            'cf' => 7,
             'fr' => 1,
-            'ru' => 'http://dict.youdao.com/wordbook/wordlist?keyfrom=null',
+            'ru' => 'http://dict.youdao.com/wordbook/wordlist?keyfrom=dict2.index#/',
             'product' => 'DICT',
             'type' => 1,
             'um' => 'true',
@@ -238,42 +165,41 @@ class WordBook
      */
     public function request($url = null, $options = null)
     {
-        if (is_null($url)):
+        if (is_null($url)) {
             return false;
-        endif;
+        }
 
-        $defaults = array(                                    // Create a list of default curl options
-            CURLOPT_RETURNTRANSFER => true,                    // Returns the result as a string
+        $defaults = [                                       // Create a list of default curl options
+            CURLOPT_RETURNTRANSFER => true,                 // Returns the result as a string
             CURLOPT_URL => $url,                            // Sets the url to request
             CURLOPT_FRESH_CONNECT => true,
             CURLOPT_HEADER => true,
             CURLINFO_HEADER_OUT => true,
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_SSL_VERIFYPEER => false,
-            CURLOPT_COOKIEJAR => realpath(self::COOKIE_FILE), // 保存返回的Cookie
-            CURLOPT_COOKIEFILE => realpath(self::COOKIE_FILE), // 读取现有Cookie, 不需要自己维护cookie变量
-            CURLOPT_TIMEOUT => 30                          // 增加超时
-        );
+            CURLOPT_COOKIEJAR => realpath(self::COOKIE_FILE),     // 保存返回的Cookie
+            CURLOPT_COOKIEFILE => realpath(self::COOKIE_FILE),    // 读取现有Cookie, 不需要自己维护cookie变量
+            CURLOPT_TIMEOUT => 30                                 // 增加超时
+        ];
 
-        if ($options):
-            foreach ($options as $k => $v):
+        if ($options) {
+            foreach ($options as $k => $v) {
                 $defaults[$k] = $v;
-            endforeach;
-        endif;
-
+            }
+        }
         array_filter($defaults, array($this, 'empty_filter'));  // Filter out empty options from the array
 
-        $ch = curl_init();                                    // Init new curl object
-        curl_setopt_array($ch, $defaults);                // Set curl options
-        $out = curl_exec($ch);                            // Request remote data
+        $ch = curl_init();                                      // Init new curl object
+        curl_setopt_array($ch, $defaults);                      // Set curl options
+        $out = curl_exec($ch);                                  // Request remote data
         $err = curl_error($ch);
-        curl_close($ch);                                    // End curl request
+        curl_close($ch);                                        // End curl request
 
-        if ($err):
+        if ($err) {
             return $err;
-        else:
+        } else {
             return $out;
-        endif;
+        }
     }
 
     /**
@@ -285,10 +211,10 @@ class WordBook
      */
     private function empty_filter($a)
     {
-        if ($a == '' || $a == null):                        // if $a is empty or null
+        if ($a == '' || $a == null){                         // if $a is empty or null
             return false;                                    // return false, else, return true
-        else:
+        } else {
             return true;
-        endif;
+        }
     }
 }

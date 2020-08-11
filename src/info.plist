@@ -89,7 +89,7 @@
 			</dict>
 			<dict>
 				<key>destinationuid</key>
-				<string>F28D41C6-10B6-447A-9DBB-CD9395F08D69</string>
+				<string>EE67A5BF-0081-4A4E-BDB4-DB8FA2F4AFC3</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -142,7 +142,7 @@
 			</dict>
 			<dict>
 				<key>destinationuid</key>
-				<string>F1565205-CE7B-4880-A3D5-5FAA0609C9C5</string>
+				<string>698ED0AA-6A32-4AA5-B9B4-94F88D53AE40</string>
 				<key>modifiers</key>
 				<integer>262144</integer>
 				<key>modifiersubtext</key>
@@ -216,19 +216,6 @@
 				<false/>
 			</dict>
 		</array>
-		<key>F1565205-CE7B-4880-A3D5-5FAA0609C9C5</key>
-		<array>
-			<dict>
-				<key>destinationuid</key>
-				<string>698ED0AA-6A32-4AA5-B9B4-94F88D53AE40</string>
-				<key>modifiers</key>
-				<integer>0</integer>
-				<key>modifiersubtext</key>
-				<string></string>
-				<key>vitoclose</key>
-				<false/>
-			</dict>
-		</array>
 	</dict>
 	<key>createdby</key>
 	<string>WensonSmith</string>
@@ -255,7 +242,7 @@
 			<key>uid</key>
 			<string>CAF59F43-6C28-47BF-B3DA-1A65C2198F2F</string>
 			<key>version</key>
-			<integer>3</integer>
+			<integer>2</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -318,7 +305,7 @@
 			<key>uid</key>
 			<string>1631393E-5B53-4C8B-AF64-A04B687438DF</string>
 			<key>version</key>
-			<integer>2</integer>
+			<integer>1</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -334,7 +321,7 @@
 				<key>hotkey</key>
 				<integer>49</integer>
 				<key>hotmod</key>
-				<integer>524288</integer>
+				<integer>262144</integer>
 				<key>hotstring</key>
 				<string>Space</string>
 				<key>leftcursor</key>
@@ -358,8 +345,6 @@
 				<false/>
 				<key>alfredfiltersresultsmatchmode</key>
 				<integer>0</integer>
-				<key>argumenttreatemptyqueryasnil</key>
-				<false/>
 				<key>argumenttrimmode</key>
 				<integer>0</integer>
 				<key>argumenttype</key>
@@ -409,7 +394,7 @@ echo $translator-&gt;translate($argv[1]);
 			<key>uid</key>
 			<string>8FE8475E-6310-49A4-967E-D6CCE73A86AC</string>
 			<key>version</key>
-			<integer>3</integer>
+			<integer>2</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -505,71 +490,6 @@ afplay "$voice"</string>
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>alfredfiltersresults</key>
-				<false/>
-				<key>alfredfiltersresultsmatchmode</key>
-				<integer>0</integer>
-				<key>argumenttreatemptyqueryasnil</key>
-				<true/>
-				<key>argumenttrimmode</key>
-				<integer>0</integer>
-				<key>argumenttype</key>
-				<integer>0</integer>
-				<key>escaping</key>
-				<integer>100</integer>
-				<key>queuedelaycustom</key>
-				<integer>3</integer>
-				<key>queuedelayimmediatelyinitially</key>
-				<true/>
-				<key>queuedelaymode</key>
-				<integer>0</integer>
-				<key>queuemode</key>
-				<integer>1</integer>
-				<key>runningsubtext</key>
-				<string>同步分组中...</string>
-				<key>script</key>
-				<string>&lt;?php
-
-require('WordBook.php');
-
-$query = $argv[1];
-
-$username = getenv('netease_username');
-$password = getenv('netease_password');
-
-
-if (empty($username) || empty($password)) {
-	echo '请设置用户名和密码';
-} else {
-	$wordBook = new WordBook($username, $password);
-
-	echo $wordBook-&gt;books($query);
-}
-
-?&gt;</string>
-				<key>scriptargtype</key>
-				<integer>1</integer>
-				<key>scriptfile</key>
-				<string></string>
-				<key>subtext</key>
-				<string></string>
-				<key>title</key>
-				<string>请选择分组</string>
-				<key>type</key>
-				<integer>1</integer>
-				<key>withspace</key>
-				<true/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.input.scriptfilter</string>
-			<key>uid</key>
-			<string>F1565205-CE7B-4880-A3D5-5FAA0609C9C5</string>
-			<key>version</key>
-			<integer>3</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
 				<key>concurrently</key>
 				<false/>
 				<key>escaping</key>
@@ -577,18 +497,21 @@ if (empty($username) || empty($password)) {
 				<key>script</key>
 				<string>require('WordBook.php');
 
-$query = "{query}";
+$word = "{query}";
 
 $username = getenv('netease_username');
 $password = getenv('netease_password');
 
 
 if (empty($username) || empty($password)) {
+
 	echo '请设置用户名和密码';
+
 } else {
+
 	$wordBook = new WordBook($username, $password);
 
-	echo $wordBook-&gt;add($query);
+	echo $wordBook-&gt;add($word);
 
 }</string>
 				<key>scriptargtype</key>
@@ -630,7 +553,7 @@ if (empty($username) || empty($password)) {
 			<key>type</key>
 			<string>alfred.workflow.utility.hidealfred</string>
 			<key>uid</key>
-			<string>F28D41C6-10B6-447A-9DBB-CD9395F08D69</string>
+			<string>EE67A5BF-0081-4A4E-BDB4-DB8FA2F4AFC3</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
@@ -662,8 +585,6 @@ if (empty($username) || empty($password)) {
 				<true/>
 				<key>alfredfiltersresultsmatchmode</key>
 				<integer>0</integer>
-				<key>argumenttreatemptyqueryasnil</key>
-				<false/>
 				<key>argumenttrimmode</key>
 				<integer>0</integer>
 				<key>argumenttype</key>
@@ -710,7 +631,7 @@ echo $updater-&gt;fetchReleases();
 			<key>uid</key>
 			<string>224556A8-701F-43C1-B08A-A973D9A7DB58</string>
 			<key>version</key>
-			<integer>3</integer>
+			<integer>2</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -763,7 +684,9 @@ echo $updater-&gt;fetchReleases();
 	<key>readme</key>
 	<string># 配置有道 KEYS
 
-&gt; 2017年9月3日更新 由于有道翻译 api 迁移到了有道智云，所以大家需要去有道智云进行注册然后创建应用了。步骤如下
+由于有道翻译 api 迁移到了有道智云，所以需要去有道智云进行注册然后创建应用。
+
+步骤如下:
 
 1.注册有道智云帐号
 
@@ -854,9 +777,9 @@ echo $updater-&gt;fetchReleases();
 		<key>698ED0AA-6A32-4AA5-B9B4-94F88D53AE40</key>
 		<dict>
 			<key>xpos</key>
-			<integer>680</integer>
+			<integer>630</integer>
 			<key>ypos</key>
-			<integer>500</integer>
+			<integer>490</integer>
 		</dict>
 		<key>6B0F6A32-751F-4071-A1E8-76A2E9486962</key>
 		<dict>
@@ -911,19 +834,12 @@ echo $updater-&gt;fetchReleases();
 			<key>ypos</key>
 			<integer>160</integer>
 		</dict>
-		<key>F1565205-CE7B-4880-A3D5-5FAA0609C9C5</key>
+		<key>EE67A5BF-0081-4A4E-BDB4-DB8FA2F4AFC3</key>
 		<dict>
 			<key>xpos</key>
-			<integer>460</integer>
+			<integer>910</integer>
 			<key>ypos</key>
-			<integer>440</integer>
-		</dict>
-		<key>F28D41C6-10B6-447A-9DBB-CD9395F08D69</key>
-		<dict>
-			<key>xpos</key>
-			<integer>900</integer>
-			<key>ypos</key>
-			<integer>690</integer>
+			<integer>700</integer>
 		</dict>
 	</dict>
 	<key>variables</key>
@@ -945,7 +861,7 @@ echo $updater-&gt;fetchReleases();
 		<string>youdao_secret</string>
 	</array>
 	<key>version</key>
-	<string>2.6.0</string>
+	<string>2.7.0</string>
 	<key>webaddress</key>
 	<string>https://iwenson.com</string>
 </dict>
