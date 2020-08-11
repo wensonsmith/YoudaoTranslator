@@ -89,7 +89,7 @@
 			</dict>
 			<dict>
 				<key>destinationuid</key>
-				<string>F28D41C6-10B6-447A-9DBB-CD9395F08D69</string>
+				<string>EE67A5BF-0081-4A4E-BDB4-DB8FA2F4AFC3</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -497,20 +497,21 @@ afplay "$voice"</string>
 				<key>script</key>
 				<string>require('WordBook.php');
 
-$query = "{query}";
+$word = "{query}";
 
 $username = getenv('netease_username');
 $password = getenv('netease_password');
 
 
 if (empty($username) || empty($password)) {
+
 	echo '请设置用户名和密码';
+
 } else {
+
 	$wordBook = new WordBook($username, $password);
 
-	list($word, $phonetic, $desc) = explode('|', $query);
-
-	echo $wordBook-&gt;add($word, $phonetic, $desc);
+	echo $wordBook-&gt;add($word);
 
 }</string>
 				<key>scriptargtype</key>
@@ -552,7 +553,7 @@ if (empty($username) || empty($password)) {
 			<key>type</key>
 			<string>alfred.workflow.utility.hidealfred</string>
 			<key>uid</key>
-			<string>F28D41C6-10B6-447A-9DBB-CD9395F08D69</string>
+			<string>EE67A5BF-0081-4A4E-BDB4-DB8FA2F4AFC3</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
@@ -683,7 +684,9 @@ echo $updater-&gt;fetchReleases();
 	<key>readme</key>
 	<string># 配置有道 KEYS
 
-&gt; 2017年9月3日更新 由于有道翻译 api 迁移到了有道智云，所以大家需要去有道智云进行注册然后创建应用了。步骤如下
+由于有道翻译 api 迁移到了有道智云，所以需要去有道智云进行注册然后创建应用。
+
+步骤如下:
 
 1.注册有道智云帐号
 
@@ -831,12 +834,12 @@ echo $updater-&gt;fetchReleases();
 			<key>ypos</key>
 			<integer>160</integer>
 		</dict>
-		<key>F28D41C6-10B6-447A-9DBB-CD9395F08D69</key>
+		<key>EE67A5BF-0081-4A4E-BDB4-DB8FA2F4AFC3</key>
 		<dict>
 			<key>xpos</key>
-			<integer>900</integer>
+			<integer>910</integer>
 			<key>ypos</key>
-			<integer>690</integer>
+			<integer>700</integer>
 		</dict>
 	</dict>
 	<key>variables</key>
@@ -858,7 +861,7 @@ echo $updater-&gt;fetchReleases();
 		<string>youdao_secret</string>
 	</array>
 	<key>version</key>
-	<string>2.6.0</string>
+	<string>2.7.0</string>
 	<key>webaddress</key>
 	<string>https://iwenson.com</string>
 </dict>
