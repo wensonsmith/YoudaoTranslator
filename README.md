@@ -1,5 +1,5 @@
 
-YoudaoTranslate | 有道翻译   ![visitors](https://visitor-badge.laobi.icu/badge?page_id=wensonsmith.YoudaoTranslate)
+YoudaoTranslate | 有道翻译  <div style="float:right"> ![visitors](https://visitor-badge.laobi.icu/badge?page_id=wensonsmith.YoudaoTranslate)</div>
 ===============
 
 ![screenshot_1](screenshot/screenshot_1.png)
