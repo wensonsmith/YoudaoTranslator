@@ -24,20 +24,19 @@ class YoudaoTranslate
     private $result;
     private $query;
     private $pronounce;
-    private $historyFile;
 
     /**
      * @var boolean $queryChinese 减少多次调用 isChinese 方法
      */
     private $queryChinese;
-
     private $phonetic;
+    
+    const HISTORY_FILE = 'history';
 
     public function __construct($keys)
     {
         $this->workflow = new Workflow;
         $this->keys = $keys;
-        $this->historyFile = 'YoudaoTranslate-'.@date('Ym').'.log';
     }
 
     /**
@@ -227,28 +226,33 @@ class YoudaoTranslate
     }
 
     /**
-     * 获取查询记录的最近 9 条
+     * 获取查询记录的最近 10 条
      */
     private function getHistory()
     {
-        $history = [];
-        $lastTenLines = $this->getLastLines($this->historyFile, 9);
-        if (!empty($lastTenLines)) {
-            foreach ($lastTenLines as $line) {
-                $result = json_decode($line);
-                if (strlen($result->subtitle) > 1) {
-                    $history[] = $result;
-                }
-            }
+        $history = $this->loadHistory();
 
-            $output = [
-                'items' => $history
-            ];
-
-            return json_encode($output);
-        } else {
+        if (empty($history)) {
             $this->addItem('没有历史纪录', 'No History');
             return $this->workflow->output();
+        } else {
+            $output = [ 'items' => $history ];
+            return json_encode($output);
+        }
+    }
+
+    /**
+     * 从文件中加载查询记录
+     * @param  array $translation
+     */
+    private function loadHistory()
+    {
+        if (!file_exists(self::HISTORY_FILE)) {
+            @file_put_contents(self::HISTORY_FILE, '[]');
+            return [];
+        } else {
+            $content = file_get_contents(self::HISTORY_FILE);
+            return json_decode($content);
         }
     }
 
@@ -258,51 +262,10 @@ class YoudaoTranslate
      */
     private function saveHistory($translation)
     {
-        @file_put_contents($this->historyFile, json_encode($translation)."\n", FILE_APPEND);
-    }
-
-    /**
-     * 取文件最后$n行
-     * @param  string  $filename  文件路径
-     * @param  int  $n  最后几行
-     * @return mixed 成功则返回字符串
-     */
-    private function getLastLines($filename, $n)
-    {
-        if (!$handler = @fopen($filename, 'r')) {
-            return false;
-        }
-
-        $eof = "";
-        $lines = [];
-        //忽略最后的 \n
-        $position = -2;
-
-        while ($n > 0) {
-            while ($eof != "\n") {
-                if (!fseek($handler, $position, SEEK_END)) {
-                    $eof = fgetc($handler);
-                    $position--;
-                } else {
-                    break;
-                }
-            }
-
-            if ($line = fgets($handler)) {
-                $lines[] = $line;
-                $eof = "";
-                $n--;
-            } else {
-                //当游标超限 fseek 报错以后，无法 fgets($fp), 需要将游标向后移动一位
-                fseek($handler, $position + 1, SEEK_END);
-                if ($line = fgets($handler)) {
-                    $lines[] = $line;
-                }
-                break;
-            }
-
-        }
-        return $lines;
+        $history = $this->loadHistory();
+        $history[] = $translation;
+        $cut = array_slice($history, -10);
+        @file_put_contents(self::HISTORY_FILE, json_encode($cut));
     }
 
     /**
@@ -324,8 +287,8 @@ class YoudaoTranslate
             ->subtitle($subtitle)
             ->quicklookurl($quickLookUrl)
             ->arg($arg)
-            ->mod('cmd', '🔊' . $this->pronounce, $this->pronounce)
-            ->mod('alt', '🔊' . $this->pronounce, $this->pronounce)
+            ->mod('cmd', '🔊 ' . $this->phonetic, $this->pronounce)
+            ->mod('alt', '📣 ' . $this->phonetic, $this->pronounce)
             ->mod('ctrl', '📝 加入生词本', $this->query)
             ->icon($icon)
             ->text('copy', $title);
