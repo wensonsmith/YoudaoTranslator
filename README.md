@@ -1,5 +1,5 @@
 
-YoudaoTranslate | 有道翻译
+YoudaoTranslate | 有道翻译   ![visitors](https://visitor-badge.laobi.icu/badge?page_id=wensonsmith.YoudaoTranslate)
 ===============
 
 ![screenshot_1](screenshot/screenshot_1.png)
@@ -90,10 +90,14 @@ $ ln -s /path/to/YoudaoTranslate/src/ ~/Library/Application\ Support/Alfred\ 3/A
 
 ## 四、Contributors
 
-<a href="https://iwenson.com" target="_blank"><img src="https://avatars0.githubusercontent.com/u/2544185?s=60&v=4" /></a> 
-<a href="https://blog.zthxxx.me" target="_blank"><img src="https://avatars3.githubusercontent.com/u/15135943?s=60&v=4" /></a> 
+<a href="https://iwenson.com" target="_blank"><img src="https://avatars1.githubusercontent.com/u/2544185?s=120&v=4" height="60"/></a> 
+<a href="https://blog.zthxxx.me" target="_blank"><img src="https://avatars0.githubusercontent.com/u/15135943?s=120&v=4" height="60"/></a> 
+<a href="https://www.zzaning.com/#/" target="_blank"><img src="https://avatars2.githubusercontent.com/u/12035097?s=88&u=7e419cd2eb7b9fec5ba061d8135c4875a4c32323&v=4" height="60"/></a> 
 
-## 五、 使用库和参考资料
+## 五、~~Buy me a coffee~~ 🍼冲奶粉
+![微信支付](./screenshot/sponsor.PNG)!
+
+## 六、 使用库和参考资料
 
 - https://github.com/joetannenbaum/alfred-workflow
 - https://www.alfredapp.com/help/workflows/inputs/script-filter/json/
