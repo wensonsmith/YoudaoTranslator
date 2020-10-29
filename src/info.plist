@@ -372,7 +372,13 @@ $keys = [
 	['appKey' =&gt; getenv('youdao_appkey'), 'secret' =&gt; getenv('youdao_secret')]
 ];
 
-$translator = new YoudaoTranslate($keys);
+$args = [
+	'word_wrap' =&gt; getenv('word_wrap'),
+	'word_wrap_zh' =&gt; getenv('word_wrap_zh'), 
+	'word_wrap_en' =&gt; getenv('word_wrap_en')
+];
+
+$translator = new YoudaoTranslate($keys, $args);
 echo $translator-&gt;translate($argv[1]);
 
 ?&gt;</string>
@@ -852,6 +858,12 @@ echo $updater-&gt;fetchReleases();
 		<string></string>
 		<key>youdao_secret</key>
 		<string></string>
+		<key>word_wrap</key>
+		<string>Yes</string>
+		<key>word_wrap_en</key>
+		<string>42</string>
+		<key>word_wrap_zh</key>
+		<string>32</string>
 	</dict>
 	<key>variablesdontexport</key>
 	<array>

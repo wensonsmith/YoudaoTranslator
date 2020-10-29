@@ -21,6 +21,7 @@ class YoudaoTranslate
 {
     private $workflow;
     private $keys;
+    private $args;
     private $result;
     private $query;
     private $pronounce;
@@ -33,10 +34,11 @@ class YoudaoTranslate
     
     const HISTORY_FILE = 'history';
 
-    public function __construct($keys)
+    public function __construct($keys, $args)
     {
         $this->workflow = new Workflow;
         $this->keys = $keys;
+        $this->args = $args;
     }
 
     /**
@@ -100,7 +102,73 @@ class YoudaoTranslate
     {
         $this->pronounce = $this->queryChinese ? $translation[0] : $this->query;
         $this->addItem($translation[0], $this->query);
+        // 添加Auto Wrap
+        $word_wrap = $this->args['word_wrap'];
+        $len_zh = 2 * $this->args['word_wrap_zh'];
+        $len_en = 2 * $this->args['word_wrap_en'];
+        if ($word_wrap == 'Yes' && $this->str_view_length($translation[0]) > $len_zh) {
+            $query_arr = $this->str_split_by_view_length($this->query, $len_en);
+            $trans_arr = $this->str_split_by_view_length($translation[0], $len_zh);
+            $query_arr_len = count($query_arr);
+            $trans_arr_len = count($trans_arr);
+            $shorter = $query_arr_len < $trans_arr_len ? $query_arr_len : $trans_arr_len;
+            $longer = $query_arr_len > $trans_arr_len ? $query_arr_len : $trans_arr_len;
+            for ($i = 0; $i < $longer - $shorter; $i++) { 
+                $trans_arr[] = "";
+                $query_arr[] = "";
+            }
+            for ($i = 0; $i < $longer; $i++) { 
+                $this->addItem($trans_arr[$i], $query_arr[$i]);
+            }
+        }
     }
+    
+	/**
+	 * 将字符串按照给定的显示长度分割为数组
+	 * @param string $str
+	 * @param int $vl 显示长度
+	 * @return array
+	 */
+	function str_split_by_view_length($str, $vl = 0) {
+		if ($vl > 10) {
+			$ret = array();
+			$str_arr = preg_split("//u", $str, -1, PREG_SPLIT_NO_EMPTY);
+			$len = count($str_arr);
+			$index = 0;
+			while ($index < $len) {
+				$tmp = '';
+				$stash = '';
+				$cur_index = $index;
+				$buff_len = 0;
+				while ($this->str_view_length($tmp) < $vl && $cur_index < $len) {
+					$cur = $str_arr[$cur_index++];
+					$tmp = $tmp.$cur;
+					$buff_len += $this->str_view_length($cur);
+                    if (!preg_match("/[a-zA-Z]/", $cur) || $buff_len > $vl - 2 
+                    || $cur_index >= $len) {
+                        $stash = $buff_len > $vl - 2 && !$cur_index >= $len ? $tmp."-" : $tmp;
+						$index = $cur_index;
+						$buff_len = 0;
+					}
+				}
+				$ret[] = $stash;
+			}
+			return $ret;
+		}
+		return [];
+	}
+    
+    /**
+     * 判断字符串的大致显示长度，中文字符为2，英文字符为1。
+     * @param string $str
+     * @return int 
+     */
+	function str_view_length($str) {
+		$length = strlen(preg_replace('/[\x00-\x7F]/', '', $str));
+		$arr['en'] = strlen($str) - $length; //（非中文）
+		$arr['cn'] = intval($length / 3); // 编码GBK，除以2 （中文）
+		return $arr['en'] * 1 + $arr['cn'] * 2;
+	}
 
     /**
      * 解析 Basic 字段， 基础释义
