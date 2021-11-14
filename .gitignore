@@ -1,8 +1,4 @@
 .vscode
-*.log
 .idea
-cookie
-Test.php
-src/info copy.plist
+node_modules
 .DS_Store
-history
