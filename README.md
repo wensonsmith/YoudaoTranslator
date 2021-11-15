@@ -1,13 +1,10 @@
 
 # YoudaoTranslate | 有道翻译  
 
-<span style="display:float; float:left; margin-right: 10px">
-
-![visitors](https://visitor-badge.laobi.icu/badge?page_id=wensonsmith.YoudaoTranslate)
-
-</span>
-
-<img alt="GitHub stars" src="https://img.shields.io/github/stars/wensonsmith/YoudaoTranslate?style=social" style="display:float; float:left"/>
+<p align="left">
+<img alt="GitHub stars" src="https://visitor-badge.laobi.icu/badge?page_id=wensonsmith.YoudaoTranslate"/>
+<img alt="GitHub stars" src="https://img.shields.io/github/stars/wensonsmith/YoudaoTranslate?style=social"/>
+</p>
 
 ![screenshot_1](screenshots/screenshot_1.png)
 
@@ -22,25 +19,26 @@ macOS Monterey 请使用 V3 版本！
 - 🌟 [**无系统环境依赖**]() - 自带 [txiki](https://github.com/saghul/txiki.js) 运行环境，不再需要 PHP
 - 🌟 [**多平台支持**]() - 支持百度的翻译API
 - 🌐 [**中英文自动互翻**]() - 支持 `CamelCase` 驼峰短语翻译
-- 🎭 [**多语言支持**]() - 可以识别中文、英文、日文、韩文、法文、俄文等
+- 🎭 [**多语言支持**](screenshots/multi.jpg) - 可以识别中文、英文、日文、韩文、法文、俄文等
 - 🎹 [**快捷键支持**]() - 双击 `⌥ Alt`  直接翻译选中内容
-- 📢 [**英文发音**]() - `⌘ Command` + `↩︎ Enter` 本地发音，`⌥ Alt` + `↩︎ Enter`  调用有道在线语音发音
-- 🚧 [**有道翻译生词本**]() - 可以将陌生单词假如有道生词本
+- 📢 [**英文发音**](screenshots/screenshot_3.png) - `⌘ Command` + `↩︎ Enter` 本地发音，`⌥ Alt` + `↩︎ Enter`  调用有道在线语音发音
+- 🚧 [**有道翻译生词本**](screenshots/word-book.jpg) - 可以将陌生单词假如有道生词本
 - 📃 [**回车复制**]() - 在选项上 `↩︎ Enter` 回车复制翻译结果
-- 🚧 [**查询历史**]() -  `yd *` 查询最近的翻译记录
-- 🚧 [**网页预览**]() - 翻译结果上按 `⇧ Shift` 直接预览有道网页
-- 🚧 [**自动更新**]() - 输入 `update` 检查更新 Workflow
+- 🚧 [**查询历史**](screenshots/translate_history.gif) -  `yd *` 查询最近的翻译记录
+- 🚧 [**网页预览**](screenshots/screenshot_4.gif) - 翻译结果上按 `⇧ Shift` 直接预览有道网页
+- 🚧 [**自动更新**](screenshots/update.png) - 输入 `update` 检查更新 Workflow
 
 
 ## 🚀 开始使用
 
+🌚  遇到问题不要怕，扫码加群来解答，[**点击扫码**](screenshots/wechat-group.jpg)
+
+### 1. 下载安装
+
 - [GitHub Releases 下载](https://github.com/wensonsmith/YoudaoTranslate/releases)
-- [又拍云下载 v3.0.0](https://img.seekbetter.me/workflows/Youdao%20Translator-300.zip)， 
+- [又拍云下载 v3.0.0](https://img.seekbetter.me/workflows/YoudaoTranslator-3.zip)
 
-## 配置有道翻译
-
-> 2017年9月3日更新
-> 由于有道翻译 api 迁移到了有道智云，所以大家需要去[有道智云](http://ai.youdao.com/)进行注册然后创建应用了
+### 2. 配置有道翻译
 
 1. 注册[有道智云](https://ai.youdao.com/)帐号
 

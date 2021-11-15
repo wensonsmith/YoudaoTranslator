@@ -1,23 +1,20 @@
 {
-  "name": "alfred",
-  "version": "1.0.0",
-  "description": "",
+  "name": "youdao.translator",
+  "version": "3.0.0",
+  "description": "Elegant translation tool",
   "main": "index.js",
   "scripts": {
     "build": "rimraf dist && rollup -c rollup.config.js",
     "test": "./runtime/quick ./dist/index.js"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Wenson",
+  "license": "MIT",
   "devDependencies": {
     "rimraf": "^3.0.2",
     "rollup": "^2.59.0",
     "rollup-plugin-copy": "^3.4.0",
     "rollup-plugin-ts": "^1.4.7",
+    "rollup-plugin-uglify": "^6.0.4",
     "typescript": "^4.4.4"
-  },
-  "dependencies": {
-    "axios": "^0.24.0",
-    "rollup-plugin-uglify": "^6.0.4"
   }
 }
