@@ -31,13 +31,18 @@ macOS Monterey 请使用 V3 版本！
 
 ## 🚀 开始使用
 
-🌚  遇到问题不要怕，扫码加群来解答，[**点击扫码**](screenshots/wechat-group.jpg)
+🌚  遇到问题不要怕，扫码加群来解答，[**点击扫码**](screenshots/wechat-group.png)
 
 ### 1. 下载安装
 
 - [GitHub Releases 下载](https://github.com/wensonsmith/YoudaoTranslate/releases)
 - [又拍云下载 v3.0.0](https://img.seekbetter.me/workflows/YoudaoTranslator-3.zip)
 
+> 由于 Mac 默认[安全策略](https://support.apple.com/zh-cn/guide/mac-help/mh40616/mac)， runtime 中附带的 txiki 在首次使用 workflow 时不能正常启动。
+> 
+> 需要找到实际 workflow 的安装目录（右键 workflow 并点击 Open in Finder），然后打开 runtime 文件夹，按住 `ctrl` 点击 `txiki`，打开成功后直接关掉终端即可。
+>
+> 后续就可以正常使用啦 🎉🎉🎉。  **Thanks @akiakise** 
 ### 2. 配置有道翻译
 
 1. 注册[有道智云](https://ai.youdao.com/)帐号
