@@ -12,8 +12,8 @@ class Translator implements ITranslator{
 
   adapter: Adapter;
 
-  constructor(key: string, secret: string, platform: string = 'Youdao') {
-    this.adapter = new Adapters[platform](key, secret, platform);
+  constructor(key: string, secret: string, platform: string) {
+    this.adapter = new Adapters[platform](key, secret);
   }
 
   public async translate(query: string): Promise<any> {
