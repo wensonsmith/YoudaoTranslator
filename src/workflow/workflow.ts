@@ -15,6 +15,7 @@ class Workflow {
       .setCmd('🔊 ' + r.pronounce, r.pronounce)
       .setAlt('📣 ' + r.pronounce, r.pronounce)
       .setCopy(r.title)
+      .setQuicklookurl(r.quicklookurl)
       .result();
     });
 

@@ -125,7 +125,8 @@ class Youdao implements Adapter {
   }
 
   private addResult( title: string, subtitle: string, arg: string = "", pronounce: string = ""): Result[] {
-    this.results.push({ title, subtitle, arg, pronounce });
+    const quicklookurl = "https://www.youdao.com/w/" + this.word;
+    this.results.push({ title, subtitle, arg, pronounce, quicklookurl });
     return this.results;
   }
 

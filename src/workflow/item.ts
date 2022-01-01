@@ -31,7 +31,7 @@ class Item {
 
   private text: any;
 
-  private quicklookurl: any[] = [];
+  private quicklookurl?: string;
 
   private mods: any = {};
 
@@ -69,6 +69,11 @@ class Item {
     this.valid = valid;
     return this;
   }
+
+   setQuicklookurl(url?: string): this {
+     this.quicklookurl = url;
+     return this;
+   }
 
   setType(type: any, verify_existence: boolean = true): this {
     if (["default", "file", "file:skipcheck"].some((t) => t === type)) {
