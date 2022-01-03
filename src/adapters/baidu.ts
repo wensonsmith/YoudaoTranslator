@@ -46,7 +46,7 @@ class Baidu implements Adapter {
     if (data.error_code) {
       return this.parseError(data.error_code);
     }
-    
+
     const { trans_result:result } = data;
     result.forEach(item => {
       const pronounce = this.isChinese ? item.dst : this.word;
@@ -76,6 +76,15 @@ class Baidu implements Adapter {
 
   private addResult( title: string, subtitle: string, arg: string = "", pronounce: string = ""): Result[] {
     const quicklookurl = "https://fanyi.baidu.com/#auto/auto/" + this.word;
+
+    const maxLength = this.detectChinese(title) ? 27 : 60;
+    
+    if (title.length > maxLength) {
+      const copy = title;
+      title = copy.slice(0, maxLength);
+      subtitle = copy.slice(maxLength);
+    }
+
     this.results.push({ title, subtitle, arg, pronounce, quicklookurl });
     return this.results;
   }

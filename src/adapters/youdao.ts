@@ -126,6 +126,15 @@ class Youdao implements Adapter {
 
   private addResult( title: string, subtitle: string, arg: string = "", pronounce: string = ""): Result[] {
     const quicklookurl = "https://www.youdao.com/w/" + this.word;
+
+    const maxLength = this.detectChinese(title) ? 27 : 60;
+    
+    if (title.length > maxLength) {
+      const copy = title;
+      title = copy.slice(0, maxLength);
+      subtitle = copy.slice(maxLength);
+    }
+
     this.results.push({ title, subtitle, arg, pronounce, quicklookurl });
     return this.results;
   }
