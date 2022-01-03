@@ -18,16 +18,15 @@ macOS Monterey 请使用 V3 版本！
 ## 特性
 - 🌟 [**无系统环境依赖**]() - 自带 [txiki](https://github.com/saghul/txiki.js) 运行环境，不再需要 PHP
 - 🌟 [**多平台支持**]() - 支持百度的翻译API
-- 🌐 [**中英文自动互翻**]() - 支持 `CamelCase` 驼峰短语翻译
+- 🌐 [**中英文自动互翻**]() - 支持 `CamelCase` 驼峰短语翻译，长句自动换行
 - 🎭 [**多语言支持**](screenshots/multi.jpg) - 可以识别中文、英文、日文、韩文、法文、俄文等
 - 🎹 [**快捷键支持**]() - 双击 `⌥ Alt`  直接翻译选中内容
 - 📢 [**英文发音**](screenshots/screenshot_3.png) - `⌘ Command` + `↩︎ Enter` 本地发音，`⌥ Alt` + `↩︎ Enter`  调用有道在线语音发音
 - 🚧 [**有道翻译生词本**](screenshots/word-book.jpg) - 可以将陌生单词假如有道生词本
 - 📃 [**回车复制**]() - 在选项上 `↩︎ Enter` 回车复制翻译结果
 - 🚧 [**查询历史**](screenshots/translate_history.gif) -  `yd *` 查询最近的翻译记录
-- 🚧 [**网页预览**](screenshots/screenshot_4.gif) - 翻译结果上按 `⇧ Shift` 直接预览有道网页
+- 🔮 [**网页预览**](screenshots/screenshot_4.gif) - 翻译结果上按 `⇧ Shift` 直接预览有道网页
 - 🚧 [**自动更新**](screenshots/update.png) - 输入 `update` 检查更新 Workflow
-
 
 ## 🚀 开始使用
 
@@ -36,35 +35,11 @@ macOS Monterey 请使用 V3 版本！
 ### 1. 下载安装
 
 - [GitHub Releases 下载](https://github.com/wensonsmith/YoudaoTranslate/releases)
-- [又拍云下载 v3.0.0](https://img.seekbetter.me/workflows/YoudaoTranslator-3.zip)
+- [又拍云下载 v3.1.0](https://img.seekbetter.me/workflows/YoudaoTranslator-3.1.zip)
 
-> 由于 Mac 默认[安全策略](https://support.apple.com/zh-cn/guide/mac-help/mh40616/mac)， runtime 中附带的 txiki 在首次使用 workflow 时不能正常启动。
-> 
-> 需要找到实际 workflow 的安装目录（右键 workflow 并点击 Open in Finder），然后打开 runtime 文件夹，按住 `ctrl` 点击 `txiki`，打开成功后直接关掉终端即可。
->
-> 后续就可以正常使用啦 🎉🎉🎉。  **Thanks @akiakise** 
-### 2. 配置有道翻译
+### 2. 配置Workflow
 
-1. 注册[有道智云](https://ai.youdao.com/)帐号
-
-2. 创建一个[自然语言翻译服务](https://ai.youdao.com/fanyi-services.s)
-
-3. 创建一个[有道云应用](https://ai.youdao.com/appmgr.s)并绑定第二步创建的服务
-
-4. 这样就可以获得应用(appKey)和密钥(secret)了
-
-   [应用](https://ai.youdao.com/appmgr.s) - 应用详情 - 应用ID appKey, 应用密钥 secret
-
-5. 把变量填入 workflow 右上角的 [X] 点开后的配置框中
-
-
-![var-config-step-1](screenshots/config-1.jpg)
-
-6. 如果要使用生词本功能，请填写网易账户。注意网易账户上面是密码，下面是账户
-
-![var-config-step-2](screenshots/config-2.jpg)
-
-
+[👉 请参考 wiki 进行配置](https://github.com/wensonsmith/YoudaoTranslator/wiki)
 ## Contributors
 
 <a href="https://iwenson.com" target="_blank"><img src="https://avatars1.githubusercontent.com/u/2544185?s=120&v=4" height="60"/></a> 
