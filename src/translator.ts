@@ -35,8 +35,8 @@ class Translator implements ITranslator {
 
   private async trimResultPhonetic(originalResult: any[]): Promise<any[]> {
     const newResult = JSON.parse(JSON.stringify(originalResult));
-    const pronunciationItemIndex = this.getPhoneticItemIndex(newResult);
-    for (let i = 0; i < pronunciationItemIndex; i++) {
+    const phoneticItemIndex = this.getPhoneticItemIndex(newResult);
+    for (let i = 0; i < phoneticItemIndex; i++) {
       const response = await redaxios
         .create()
         .get(this.adapter.url(newResult[i].arg));
