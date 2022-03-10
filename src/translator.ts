@@ -41,7 +41,9 @@ class Translator implements ITranslator {
         .create()
         .get(this.adapter.url(newResult[i].arg));
       const phonetic = response.data.basic["us-phonetic"];
-      newResult[i].title = `${newResult[i].title} [${phonetic}]`;
+      if (phonetic) {
+        newResult[i].title = `${newResult[i].title} [${phonetic}]`;
+      }
     }
     return newResult;
   }
