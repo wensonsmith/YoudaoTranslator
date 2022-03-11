@@ -37,12 +37,17 @@ class Translator implements ITranslator {
     const newResult = JSON.parse(JSON.stringify(originalResult));
     const phoneticItemIndex = this.getPhoneticItemIndex(newResult);
     for (let i = 0; i < phoneticItemIndex; i++) {
+      if (/ /.test(newResult[i].arg)) {
+        continue;
+      }
       const response = await redaxios
         .create()
         .get(this.adapter.url(newResult[i].arg));
-      const phonetic = response.data.basic["us-phonetic"];
-      if (phonetic) {
-        newResult[i].title = `${newResult[i].title} [${phonetic}]`;
+      if (response.data && response.data.basic) {
+        const phonetic = response.data.basic["us-phonetic"];
+        if (phonetic) {
+          newResult[i].title = `${newResult[i].title} [${phonetic}]`;
+        }
       }
     }
     return newResult;
