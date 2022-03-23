@@ -16,7 +16,7 @@ class WordBook
     /**
      * 生词本添加地址
      */
-    const ADD_WORD_URL = 'http://dict.youdao.com/wordbook/ajax?action=addword&le=eng&';
+    const ADD_WORD_URL = 'https://dict.youdao.com/wordbook/webapi/v2/ajax/add?lan=en&';
 
     /**
      * Cookie 文件
@@ -104,7 +104,7 @@ class WordBook
      */
     private function pushWord($word)
     {
-        $params = [ 'q' => $word, 'tags'=> 'Alfred' ];
+        $params = [ 'word' => $word, 'tags'=> 'Alfred' ];
         $url = self::ADD_WORD_URL . http_build_query($params);
 
         $header = $this->buildHeader();
@@ -114,7 +114,7 @@ class WordBook
 
         $result = explode("\r\n\r\n", $response, 2);
         
-        return $result[1] == '{"message":"adddone"}';
+        return $result[1] == '{"code":0,"msg":"SUCCESS","data":null}';
     }
 
     /**
