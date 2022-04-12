@@ -30,7 +30,7 @@ macOS Monterey 请使用 V3 版本！
 
 ## 🚀 开始使用
 
-🌚  遇到问题不要怕，扫码加群来解答，[**点击扫码**](screenshots/wechat-group.jpeg)
+🌚  遇到问题不要怕，扫码加群来解答，[**点击扫码**](screenshots/wechat-group.png)
 
 ### 1. 下载安装
 
