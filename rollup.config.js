@@ -1,21 +1,21 @@
-import ts from 'rollup-plugin-ts'
-import copy from 'rollup-plugin-copy'
-import { uglify } from 'rollup-plugin-uglify'
+import typescript from '@rollup/plugin-typescript';
+import copy from 'rollup-plugin-copy';
+import { terser } from 'rollup-plugin-terser';
 
 export default {
   input: 'src/index.ts',
   output: {
-    dir: 'dist'
+    file: 'dist/bundle.js',
+    format: 'cjs'
   },
-  
   plugins: [
-    ts({
-      tsconfig: "tsconfig.json"
+    typescript(),
+    copy({
+      targets: [
+        { src: 'runtime/*', dest: 'dist/runtime' },
+        { src: 'assets/*', dest: 'dist/assets' }
+      ]
     }),
-    copy({targets: [
-      { src: 'runtime/*', dest: 'dist/runtime' },
-      { src: 'assets/*', dest: 'dist/assets' }
-    ]}),
-    uglify()
+    // terser()
   ]
-}
+};

@@ -1,20 +1,12 @@
 {
   "compilerOptions": {
-    "target": "es2018",
+    "target": "esnext",
     "module": "esnext",
-    "moduleResolution": "node",
-    "noImplicitAny": false,
-    "noEmitOnError": true,
-    "lib": ["es2019", "dom", "dom.iterable"],
     "strict": true,
-    "esModuleInterop": false,
-    "outDir": "out-tsc",
-    "rootDir": "./"
+    "jsx": "preserve",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "outDir": "./dist"
   },
-  "include": [
-    "./src/**/*.ts",
-    "src/libs/redaxios.js",
-    "src/adapters/youdao.js",
-    "src/libs/fetch.js"
-  ]
+  "include": ["src/**/*.ts"]
 }

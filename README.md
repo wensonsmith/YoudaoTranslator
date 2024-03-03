@@ -30,8 +30,6 @@ macOS Monterey 请使用 V3 版本！
 
 ## 🚀 开始使用
 
-🌚  遇到问题不要怕，扫码加群来解答，[**点击扫码**](screenshots/wechat-group.png)
-
 ### 1. 下载安装
 
 - [GitHub Releases 下载](https://github.com/wensonsmith/YoudaoTranslate/releases)
@@ -40,14 +38,12 @@ macOS Monterey 请使用 V3 版本！
 ### 2. 配置Workflow
 
 [👉 请参考 wiki 进行配置](https://github.com/wensonsmith/YoudaoTranslator/wiki)
-## Contributors
 
+## Contributors
 <a href="https://iwenson.com" target="_blank"><img src="https://avatars1.githubusercontent.com/u/2544185?s=120&v=4" height="60"/></a> 
 <a href="https://blog.zthxxx.me" target="_blank"><img src="https://avatars0.githubusercontent.com/u/15135943?s=120&v=4" height="60"/></a> 
-<a href="https://www.zzaning.com/#/" target="_blank"><img src="https://avatars2.githubusercontent.com/u/12035097?s=88&u=7e419cd2eb7b9fec5ba061d8135c4875a4c32323&v=4" height="60"/></a> 
-
-## ~~Buy me a coffee~~ 🍼 冲奶粉!
-![微信支付](./screenshots/sponsor.PNG)
+<a href="https://www.zzaning.com/#/" target="_blank"><img src="https://avatars2.githubusercontent.com/u/12035097?s=88&u=7e419cd2eb7b9fec5ba061d8135c4875a4c32323&v=4" height="60"/></a>
+<a href="https://www.zzaning.com/#/" target="_blank"><img src="https://avatars.githubusercontent.com/u/6234399?v=4" height="60"/></a>
 
 ## 使用库和参考资料
 
