@@ -1,19 +1,12 @@
 
-# YoudaoTranslate | 有道翻译  
-
-<p align="left">
-<img alt="GitHub stars" src="https://visitor-badge.laobi.icu/badge?page_id=wensonsmith.YoudaoTranslate"/>
-<img alt="GitHub stars" src="https://img.shields.io/github/stars/wensonsmith/YoudaoTranslate?style=social"/>
-</p>
+# YoudaoTranslate | 有道翻译
 
 ![screenshot_1](screenshots/screenshot_1.png)
 
-## ⚠️ V3 更新说明
-该版本使用 TS 重构，自带运行环境，不再依赖 PHP。同时支持多个平台的 API。
+##  V4 更新说明
+主要支持Mac M芯片，重新编译txiki.js自带运行环境，不依赖PHP；
 
-macOS Monterey 请使用 V3 版本！
 
-标记为施工中 (🚧) 特性 V3 尚未支持，如果需要使用，请切换到 V2 使用。
 
 ## 特性
 - 🌟 [**无系统环境依赖**]() - 自带 [txiki](https://github.com/saghul/txiki.js) 运行环境，不再需要 PHP
