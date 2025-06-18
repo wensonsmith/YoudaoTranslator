@@ -17,6 +17,6 @@ export interface Adapter {
 
   url :(word: string) => string;
 
-  parse: (response: any) => Result[]
+  parse: (response: any) => Promise<Result[]>
 }
 

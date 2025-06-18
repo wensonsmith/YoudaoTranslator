@@ -42,7 +42,7 @@ class Baidu implements Adapter {
     return "https://fanyi-api.baidu.com/api/trans/vip/translate?" + params.toString();
   }
 
-  parse(data: any): Result[] {
+  async parse(data: any): Promise<Result[]> {
     if (data.error_code) {
       return this.parseError(data.error_code);
     }

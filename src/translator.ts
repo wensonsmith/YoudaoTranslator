@@ -24,7 +24,7 @@ class Translator implements ITranslator{
     // fetch
     const response = await redaxios.create().get(url);
     // parse
-    const result = this.adapter.parse(response.data);
+    const result = await this.adapter.parse(response.data);
     // compose
     return new Workflow().compose(result).output();
   }

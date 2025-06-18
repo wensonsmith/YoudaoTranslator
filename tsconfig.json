@@ -9,6 +9,7 @@
     "strict": true,
     "esModuleInterop": false,
     "outDir": "out-tsc",
+    "allowSyntheticDefaultImports": true,
     "rootDir": "./"
   },
   "include": [

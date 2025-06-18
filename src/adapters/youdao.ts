@@ -1,5 +1,6 @@
 import { Adapter, Result } from "./adapter";
 import md5 from "../libs/md5";
+import cheerio from "cheerio";
 
 class Youdao implements Adapter {
   key: string;
@@ -40,16 +41,14 @@ class Youdao implements Adapter {
     return "https://openapi.youdao.com/api?" + params.toString();
   }
 
-  parse(data: any): Result[] {
+  async parse(data: any): Promise<Result[]> {
     if (data.errorCode !== "0") {
       return this.parseError(data.errorCode);
     }
 
-    const { translation, basic, web } = data;
-
+    const { translation, webdict, web } = data;
     this.parseTranslation(translation);
-    this.parseBasic(basic);
-    this.parseWeb(web);
+    await this.parseWebdict(webdict);
 
     return this.results;
   }
@@ -75,6 +74,51 @@ class Youdao implements Adapter {
         this.addResult( phonetic, "回车可听发音", "~" + pronounce, pronounce );
       }
     }
+  }
+
+  // Thanks for @VWagen1989's solution
+  // https://github.com/whyliam/whyliam.workflows.youdao/issues/125#issuecomment-2119263993
+  private async parseWebdict(t: any) {
+    var url = t && t["url"]
+    await fetch(url)
+    .then(response => {
+      if (response.ok) {
+        return response.text();
+      }
+      throw new Error('Network response was not ok.');
+    })
+    .then(html => {
+      const $ = cheerio.load(html);
+      $('div.content-wrp.dict-container.opened').each((i, el) => {
+        this.parseResultItems($(el), $);
+      })
+    })
+    .catch(error => {
+      console.error('There has been a problem with your fetch operation:', error);
+    });
+  }
+
+  private parseResultItems(item, $) {
+    let e = this.word
+    // Tricky: It will just get the first trans-container.
+    // Because the others will not be available until you click the button to expand.
+    const tc = item.find('div[class^="trans-container"]');
+
+    let phonetics: string[] = [];
+    tc.find('span.phonetic').each((i, el) => {
+      const label = $(el).parent('span').contents().first().text().trim();
+      const phoneticText = $(el).text().trim();
+      phonetics.push(`${label} ${phoneticText}`);
+    });
+    const phoneticsCombined = phonetics.join('; ');
+    if (phoneticsCombined != '') {
+      this.addResult(phoneticsCombined, "回车可听发音", e, e);
+    }
+
+    // Extract translation results
+    item.find('ul li, ul a.clickable').each((i, el) => {
+      this.addResult($(el).text().trim(), this.word, e, e);
+    });
   }
 
   private parseWeb(web: any) {
