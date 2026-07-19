@@ -4,6 +4,8 @@
   "description": "Elegant translation tool",
   "main": "index.js",
   "scripts": {
+    "download-txiki": "node scripts/download-txiki.js",
+    "prebuild": "node scripts/download-txiki.js",
     "build": "rimraf dist && rollup -c rollup.config.js",
     "test": "./runtime/quick ./dist/index.js"
   },

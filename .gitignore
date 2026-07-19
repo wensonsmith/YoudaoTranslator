@@ -3,3 +3,5 @@
 node_modules
 .DS_Store
 dist
+runtime/txiki-arm64
+runtime/txiki-x86_64
